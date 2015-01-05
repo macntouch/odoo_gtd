@@ -1,0 +1,792 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"is",
+				"is"
+			],
+			[
+				"thread",
+				"thread"
+			],
+			[
+				"event_",
+				"stasis_event_handlers"
+			],
+			[
+				"stas",
+				"stasis_event_handlers"
+			],
+			[
+				"stasis_",
+				"stasis_app_error"
+			],
+			[
+				"de",
+				"def	Function"
+			],
+			[
+				"conn",
+				"connect"
+			],
+			[
+				"valid",
+				"validate_start"
+			],
+			[
+				"mode",
+				"model_domain"
+			],
+			[
+				"mo",
+				"model_domain_ro"
+			],
+			[
+				"model",
+				"model_domain"
+			],
+			[
+				"cha",
+				"channel_id"
+			],
+			[
+				"cre",
+				"create_lead_on_key_press"
+			],
+			[
+				"crea",
+				"create_lead_on_answer"
+			],
+			[
+				"create_le",
+				"create_lead_on_key_press"
+			],
+			[
+				"pro",
+				"progress"
+			],
+			[
+				"group",
+				"group_by"
+			],
+			[
+				"peer_name",
+				"peer_name_simult"
+			],
+			[
+				"Vali",
+				"ValidationError"
+			],
+			[
+				"cdr",
+				"cdr_queue_count"
+			],
+			[
+				"conf",
+				"confirm_user"
+			],
+			[
+				"con",
+				"confirm_user"
+			],
+			[
+				"Many2",
+				"Many2one"
+			],
+			[
+				"In",
+				"Integer"
+			],
+			[
+				"Groups",
+				"Groups"
+			],
+			[
+				"in",
+				"invisible"
+			],
+			[
+				"str",
+				"strptime"
+			],
+			[
+				"act",
+				"active_session_state"
+			],
+			[
+				"Val",
+				"ValidationError"
+			],
+			[
+				"origi",
+				"origination_thread"
+			],
+			[
+				"stasis",
+				"stasis_app_error"
+			],
+			[
+				"acitve",
+				"active_session"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "__openerp__.py",
+			"settings":
+			{
+				"buffer_size": 1552,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "from openerp import fields, models, api\n\n\nclass Project(models.Model):\n	_name = 'gtd.project'\n	\n	name = fields.Char(required=True)\n	note = fields.Text()\n	area = fields.Many2one('gtd.area')\n	is_active = fields.Boolean(default=True)\n	due = fields.Date()\n	project_type = fields.Selection(\n		('active', 'Active'),\n		('scheduled', 'Scheduled'),\n		('someday', 'Someday'),\n	)\n\n\n",
+			"file": "models/project.py",
+			"file_size": 286,
+			"file_write_time": 130646656380733456,
+			"settings":
+			{
+				"buffer_size": 371,
+				"line_ending": "Unix",
+				"name": "from openerp import models, api"
+			}
+		},
+		{
+			"file": "models/task.py",
+			"settings":
+			{
+				"buffer_size": 572,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "models/area.py",
+			"settings":
+			{
+				"buffer_size": 126,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "models/context.py",
+			"settings":
+			{
+				"buffer_size": 129,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "from openerp import fields, models, api\n\nclass Tag(models.Model):\n	_name = 'gtd.tag'\n\n	name = fields.Char(required=True)\n	owner = fields.Many2one('res.users')\n\n",
+			"file": "models/tag.py",
+			"file_size": 123,
+			"file_write_time": 130646666416693199,
+			"settings":
+			{
+				"buffer_size": 160,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "__init__.py",
+			"settings":
+			{
+				"buffer_size": 1007,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/max/tmp-work/odoo/myaddons/asterisk_dialer/models/dialer.py",
+			"settings":
+			{
+				"buffer_size": 35971,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 306.0,
+		"selected_items":
+		[
+			[
+				"remo",
+				"Package Control: Remove Package"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"show ",
+				"SublimeLinter: Show All Errors"
+			],
+			[
+				"lint",
+				"SublimeLinter: Show All Errors"
+			],
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 467.0
+	},
+	"console":
+	{
+		"height": 309.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)",
+			"Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)",
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; "
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/home/max/tmp-work/odoo/myaddons/project_timedoctor/__openerp__.py",
+		"/home/max/tmp-work/odoo/myaddons/project_timedoctor/__init__.py",
+		"/home/max/tmp-work/odoo/myaddons/project_timedoctor/controllers/__init__.py",
+		"/home/max/tmp-work/odoo/myaddons/project_timedoctor/test.py",
+		"/home/max/tmp-work/odoo/myaddons/asterisk_dialer/models/dialer.py",
+		"/home/max/tmp-work/odoo/myaddons/asterisk_dialer/README.md",
+		"/home/max/tmp-work/odoo/myaddons/asterisk_dialer_crm/test_1.py",
+		"/home/max/.config/sublime-text-3/Packages/Pylinter/Default (Linux).sublime-keymap",
+		"/home/max/.config/sublime-text-3/Packages/Pylinter/Pylinter.sublime-settings",
+		"/home/max/.config/sublime-text-3/Packages/SublimeLinter/SublimeLinter.sublime-settings",
+		"/home/max/tmp-work/odoo/myaddons/asterisk_dialer_crm/__init__.py",
+		"/home/max/tmp-work/odoo/myaddons/asterisk_dialer_crm/__openerp__.py",
+		"/home/max/tmp-work/odoo/odoo/openerp/models.py",
+		"/home/max/tmp-work/odoo/myaddons/asterisk_dialer/controllers/main.py",
+		"/home/max/tmp-work/odoo/myaddons/asterisk_dialer/views/server_view.xml",
+		"/home/max/tmp-work/odoo/odoo_of/openerp/http.py",
+		"/home/max/tmp-work/odoo/odoo_of/addons/web/controllers/main.py",
+		"/home/max/tmp-work/odoo/myaddons/asterisk_dialer_crm/dialer_crm.py",
+		"/home/max/tmp-work/odoo/odoo/addons/web/controllers/main.py",
+		"/home/max/tmp-work/odoo/myaddons/asterisk_dialer/install.sh",
+		"/home/max/tmp-work/odoo/myaddons/asterisk_dialer/views/dialer_view.xml",
+		"/home/max/tmp-work/odoo/myaddons/asterisk_dialer/models/soundfile.py",
+		"/home/max/tmp-work/odoo/myaddons/asterisk_dialer/static/description/index.html",
+		"/home/max/tmp-work/odoo/myaddons/asterisk_dialer/__openerp__.py",
+		"/home/max/tmp-work/odoo/myaddons/asterisk_dialer/LICENSE",
+		"/home/max/tmp-work/odoo/myaddons/custom_contacts/res_partner_view.xml",
+		"/home/max/tmp-work/odoo/myaddons/asterisk_dialer/views/soundfile_view.xml",
+		"/home/max/tmp-work/odoo/myaddons/custom_contacts/__openerp__.py",
+		"/home/max/tmp-work/odoo/myaddons/custom_contacts/res_partner.py",
+		"/home/max/tmp-work/odoo/odoo/addons/crm/crm.py",
+		"/home/max/tmp-work/odoo/myaddons/asterisk_dialer_crm/dialer_crm_view.xml",
+		"/home/max/tmp-work/odoo/odoo/addons/crm/crm_lead.py",
+		"/home/max/tmp-work/odoo/myaddons/asterisk_dialer/models/dialer_crm.py",
+		"/home/max/tmp-work/odoo/odoo/addons/crm_mass_mailing/mass_mailing.py",
+		"/home/max/tmp-work/odoo/odoo/addons/mass_mailing/views/mass_mailing.xml",
+		"/home/max/tmp-work/odoo/odoo/addons/marketing/marketing_view.xml",
+		"/home/max/tmp-work/odoo/odoo/addons/marketing_campaign/marketing_campaign_view.xml",
+		"/home/max/tmp-work/odoo/myaddons/asterisk_dialer/views/assets.xml",
+		"/home/max/tmp-work/odoo/myaddons/asterisk_dialer/views/server_data.xml",
+		"/home/max/tmp-work/odoo/myaddons/asterisk_dialer/models/server.py",
+		"/home/max/tmp-work/odoo/myaddons/asterisk_dialer/security/ir.model.access.csv"
+	],
+	"find":
+	{
+		"height": 25.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"stasis_event_handlers",
+			"class dial",
+			"playb",
+			"dispatch(",
+			"dispatch",
+			"nodb_routing_map",
+			"index",
+			"nodb_routing_map",
+			"Generating nondb routing",
+			"login",
+			"authenticate",
+			"public",
+			"authe",
+			"login",
+			"db=",
+			"session",
+			"db=",
+			"@http.route",
+			"@route",
+			"print",
+			"Webso",
+			"stasis_app_error",
+			"print",
+			")\n",
+			"self.ari_client.co",
+			"self.ari_client.conn",
+			"def run",
+			"answered_time_str",
+			"Answer time",
+			"Current filter",
+			"channel",
+			"asterisk.dialer.channel",
+			"dialer_channel_action",
+			"channels",
+			"strftime",
+			"peer ",
+			"peer",
+			"Peer",
+			"peer",
+			"contact_count",
+			"Phone n",
+			"Total Contacts",
+			"Total",
+			"Total Contacts",
+			"8.0.1.1",
+			"Dial gr",
+			"return",
+			"_get_model_domain",
+			"dialer.contact",
+			"dialer.co",
+			"model_d",
+			"api.mod",
+			"api.mul",
+			"api.mo",
+			"api.mod",
+			"dialer.co",
+			"view_part",
+			"<field name='domain'>[('is_custom','=', True)]</field>",
+			"is_cu",
+			"dialer.con",
+			"groups",
+			"groups                            \n",
+			"groups",
+			"                            \n",
+			"                            ",
+			"groups",
+			"asterisk.dialer.cdr",
+			"                                ",
+			"\n        ",
+			"hangup ch",
+			"statistics",
+			"oe_view_nocontent_create",
+			"sound",
+			"hangup",
+			"Queue",
+			"<i>Di",
+			"click here to create a new dial",
+			"call rou",
+			"create",
+			"Phone",
+			"Phones",
+			"stas",
+			"playback",
+			"playback_sta",
+			"playback",
+			"Stats",
+			"oncha",
+			"tag",
+			"campai",
+			"crm.",
+			"on_an",
+			"sound_f",
+			"groups",
+			"Mailing l",
+			"Mailing",
+			"invisi",
+			"invis",
+			"filter",
+			"chan",
+			"cha",
+			"depends",
+			"ARI ConnectionError",
+			"Cance",
+			"-",
+			"search",
+			"cancel",
+			"sound",
+			"menui",
+			"SIP peer name",
+			"call_count",
+			"nola",
+			"cdr_q",
+			"contacts",
+			"asterisk_dialer_contacts",
+			"asterisk.dialer.contacts",
+			"contact.",
+			"queue",
+			"originate_call",
+			"originate(",
+			"print",
+			"ref",
+			">search",
+			"search",
+			"cdr_cou",
+			"cdr_count",
+			"is_origination_thread_alive",
+			"_is_origination_thread_alive",
+			"start()"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 5,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "__openerp__.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1552,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								149,
+								149
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "models/project.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 371,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								95,
+								95
+							]
+						],
+						"settings":
+						{
+							"auto_name": "from openerp import models, api",
+							"syntax": "Packages/Python/Python.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "models/task.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 572,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								572,
+								572
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "models/area.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 126,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "models/context.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 129,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								39,
+								39
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "models/tag.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 160,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								159,
+								159
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "__init__.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1007,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1007,
+								1007
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "/home/max/tmp-work/odoo/myaddons/asterisk_dialer/models/dialer.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 35971,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 25.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"project": "untitled.sublime-project",
+	"replace":
+	{
+		"height": 46.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": false,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

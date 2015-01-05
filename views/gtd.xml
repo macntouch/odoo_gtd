@@ -1,0 +1,5 @@
+<openerp>
+	<data>
+		<menuitem id='gtd_top_menu' name='GTD' sequence='10'/>
+	</data>
+</openerp>
