@@ -1,5 +1,6 @@
 <openerp>
 	<data>
 		<menuitem id='gtd_top_menu' name='GTD' sequence='10'/>
+		<menuitem id='project_settings_menu' name='Settings' parent='gtd_top_menu' sequence='50'/>
 	</data>
 </openerp>

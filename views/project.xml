@@ -1,0 +1,233 @@
+<openerp><data>
+
+    <menuitem id='project_top_menu' name='Projects' parent='gtd_top_menu' sequence='5'/>
+
+    <record id='project_tree_view' model='ir.ui.view'>
+        <field name='name'>Project Tree</field>
+        <field name='model'>gtd.project</field>
+        <field name='arch' type='xml'>
+            <tree colors="grey:state=='Onhold';blue:state=='Active'">
+                <field name="sequence" widget="handle"/>
+                <field name='name'/>
+                <field name="state"/>
+                <button name="set_active" icon="STOCK_EXECUTE" type="object" states="Onhold"/>
+                <button name="set_onhold" icon="STOCK_SAVE" type="object" states="Active"/>
+                <field name="task_count" string="Tasks"/>
+                <field name="area"/>
+                <field name="state_change_count" string="Changed"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id='project_form_view' model='ir.ui.view'>
+        <field name='name'>Project Form</field>
+        <field name='model'>gtd.project</field>
+        <field name='arch' type='xml'>
+            <form string='Project'>
+                <header>
+                    <button name="set_active" type="object" string="Active"
+                            class="oe_read_only oe_highlight" attrs="{'invisible': [('state','=','Active')]}"/>
+                    <button name="set_onhold" type="object" string="Onhold"
+                            class="oe_read_only oe_highlight" attrs="{'invisible': [('state','=','Onhold')]}"/>
+                    <button name="set_done" type="object" string="Done"
+                            class="oe_read_only oe_highlight" attrs="{'invisible': [('state','=','Done')]}"/>
+                    <button name="set_cancelled" type="object" string="Cancel"
+                            class="oe_read_only oe_highlight" attrs="{'invisible': [('state','=','Cancelled')]}"/>
+
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet string="Project">
+                    <div class='oe_button_box oe_right'>
+                        <button class="oe_inline oe_stat_button" name='%(task_project_action)d'
+                                string='Tasks' type='action'
+                                context="{'default_project': active_id}" icon="fa-tasks">
+                            <span><field string="Tasks" name="task_count"/></span>
+                        </button>
+                    </div>
+
+                    <div class='oe_title oe_left'>
+                        <label for='name' class='oe_edit_only'/>
+                        <h1><field name='name'/></h1>
+                    </div>
+                    <group>
+                        <group string='Attributes'>
+                            <field name="state" required="True"/>
+                            <field name="area" required="True"/>
+                        </group>
+                        <group string='Additional'>
+                            <field name="related_projects" widget="many2many_tags"/>
+                            <field name='note'/>
+                            <field name="state_change_count" string="Changed"
+                                   readonly="1"/>
+                        </group>
+                        <!--
+                        <group string='Task settings'>
+                            <field name='assigned'/>
+                            <field name='project'/>
+                            <field name='area' widget='many2many_tags'/>
+                            <field name='context' widget='many2many_tags'/>
+                            <field name='tags' widget='many2many_tags'/>
+                            <field name='due'/>
+                        </group>
+                        -->
+                    </group>
+                    <group string="Tasks">
+                        <group>
+                            <field name="today_tasks" nolabel="1"
+                                   context="{'default_state':'Today'}">
+                                    <tree>
+                                        <field string="Today" name="name"/>
+                                    </tree>
+                            </field>
+                        </group>
+                        <group>
+                            <field name="tomorrow_tasks" nolabel="1"
+                                    context="{'default_state':'Tomorrow'}">
+                                    <tree>
+                                        <field string="Tomorrow" name="name"/>
+                                    </tree>
+                            </field>
+                        </group>
+                        <group>
+                            <field name="next_tasks" nolabel="1"
+                                    context="{'default_state':'Next'}">
+                                    <tree>
+                                        <field string="Next" name="name"/>
+                                    </tree>
+                            </field>
+                        </group>
+                        <group>
+                            <field name="someday_tasks" nolabel="1"
+                                    context="{'default_state':'Someday'}">
+                                    <tree>
+                                        <field string="Someday" name="name"/>
+                                    </tree>
+                            </field>
+                        </group>
+                        <group>
+                            <field name="waiting_tasks" nolabel="1"
+                                    context="{'default_state':'Waiting'}">
+                                    <tree>
+                                        <field string="Waiting" name="name"/>
+                                    </tree>
+                            </field>
+                        </group>
+                        <group>
+                            <field name="scheduled_tasks" nolabel="1"
+                                    context="{'default_state':'Scheduled'}">
+                                    <tree>
+                                        <field string="Scheduled" name="name"/>
+                                    </tree>
+                            </field>
+                        </group>
+
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="project_search" model="ir.ui.view">
+        <field name="name">gtd.project.search</field>
+        <field name="model">gtd.project</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="state"/>
+                <field name="area"/>
+                <group string="Filter by">
+                    <filter string="Active" domain="[('state','=','Active')]"/>
+                    <filter string="Onhold" domain="[('state','=','Onhold')]"/>
+                </group>
+                <group string="Group By">
+                    <filter string="State" name="by_state" domain="[]"
+                            context="{'group_by': 'state'}"/>
+                    <filter string="Area" name="by_area" domain="[]"
+                            context="{'group_by': 'area'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id='project_all_action' model='ir.actions.act_window'>
+        <field name='name'>Projects</field>
+        <field name='res_model'>gtd.project</field>
+        <field name='view_mode'>tree,form</field>
+        <!-- <field name='context'>{'default_assigned': uid, 'default_state': 'inbox'}</field>
+        <field name='domain'>[('state','=','inbox'), ('assigned','=',uid)]</field>
+        -->
+    </record>
+
+    <record id='project_active_action' model='ir.actions.act_window'>
+        <field name='name'>Projects</field>
+        <field name='res_model'>gtd.project</field>
+        <field name='view_mode'>tree,form</field>
+        <field name='domain'>[('state','=','Active')]</field>
+    </record>
+    <record id='project_onhold_action' model='ir.actions.act_window'>
+        <field name='name'>Projects</field>
+        <field name='res_model'>gtd.project</field>
+        <field name='view_mode'>tree,form</field>
+        <field name='domain'>[('state','=','Onhold')]</field>
+    </record>
+    <record id='project_done_action' model='ir.actions.act_window'>
+        <field name='name'>Projects</field>
+        <field name='res_model'>gtd.project</field>
+        <field name='view_mode'>tree,form</field>
+        <field name='domain'>[('state','=','Done')]</field>
+    </record>
+    <record id='project_cancelled_action' model='ir.actions.act_window'>
+        <field name='name'>Projects</field>
+        <field name='res_model'>gtd.project</field>
+        <field name='view_mode'>tree,form</field>
+        <field name='domain'>[('state','=','Cancelled')]</field>
+    </record>
+    <record id='project_current_action' model='ir.actions.act_window'>
+        <field name='name'>Projects</field>
+        <field name='res_model'>gtd.project</field>
+        <field name='view_mode'>tree,form</field>
+        <field name='domain'>[('state','in',['Active','Onhold'])]</field>
+    </record>
+
+    <menuitem id='project_active_menu' name='Active' parent='project_top_menu'
+              sequence='5' action='project_active_action'/>
+    <menuitem id='project_onhold_menu' name='Onhold' parent='project_top_menu'
+              sequence='10' action='project_onhold_action'/>
+    <menuitem id='project_current_menu' name='Current' parent='project_top_menu'
+              sequence='15' action='project_current_action'/>
+    <menuitem id='project_done_menu' name='Done' parent='project_top_menu'
+              sequence='20' action='project_done_action'/>
+    <menuitem id='project_cancelled_menu' name='Cancelled' parent='project_top_menu'
+              sequence='25' action='project_cancelled_action'/>
+    <menuitem id='project_all_menu' name='All' parent='project_top_menu'
+              sequence='30' action='project_all_action'/>
+
+    <!-- Context Actions -->
+    <record id="project_multi_set_active_server_action" model="ir.actions.server">
+        <field name="name">Set Active</field>
+        <field name="model_id" ref="model_gtd_project"/>
+        <field name="state">code</field>
+        <field name="code">object.set_multi_state('Active')</field>
+    </record>
+    <record id="project_multi_set_active_context_action" model="ir.values">
+        <field name="name">Set Active</field>
+        <field name="model">gtd.project</field>
+        <field name="key2">client_action_multi</field>
+        <field name="value"
+               eval="'ir.actions.server,' + str(ref('project_multi_set_active_server_action'))"/>
+    </record>
+    <record id="project_multi_set_onhold_server_action" model="ir.actions.server">
+        <field name="name">Set Onhold</field>
+        <field name="model_id" ref="model_gtd_project"/>
+        <field name="state">code</field>
+        <field name="code">object.set_multi_state('Onhold')</field>
+    </record>
+    <record id="project_multi_set_onhold_context_action" model="ir.values">
+        <field name="name">Set Onhold</field>
+        <field name="model">gtd.project</field>
+        <field name="key2">client_action_multi</field>
+        <field name="value"
+               eval="'ir.actions.server,' + str(ref('project_multi_set_onhold_server_action'))"/>
+    </record>
+
+</data></openerp>

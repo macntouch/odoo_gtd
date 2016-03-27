@@ -45,6 +45,8 @@ GTD
     },
     'data': [
         'views/gtd.xml',
+        'views/area.xml',
+        'views/project.xml',
         'views/task.xml',
         ],
     'demo': [

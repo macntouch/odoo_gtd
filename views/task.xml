@@ -1,80 +1,79 @@
 <openerp><data>
 
-<menuitem id='task_menu' name='Tasks' parent='gtd_top_menu' sequence='10'/>
+<menuitem id='task_top_menu' name='Tasks' parent='gtd_top_menu' sequence='10'/>
 
-<record id='inbox_action' model='ir.actions.act_window'>
-	<field name='name'>GTD Inbox Actions</field>
+<record id='task_project_action' model='ir.actions.act_window'>
+	<field name='name'>Tasks</field>
 	<field name='res_model'>gtd.task</field>
 	<field name='view_mode'>tree,form</field>
-	<field name='context'>{'default_assigned': uid, 'default_state': 'inbox'}</field>
-	<field name='domain'>[('state','=','inbox'), ('assigned','=',uid)]</field>
+	<field name='context'>{'default_project': active_id}</field>
+	<field name='domain'>[('project','=', active_id)]</field>
 </record>
 
-<menuitem id='inbox_menu' name='Inbox' parent='task_menu' sequence='10' action='inbox_action'/>
-
-<record id='today_action' model='ir.actions.act_window'>
-	<field name='name'>GTD Today Actions</field>
+<record id='task_action1' model='ir.actions.act_window'>
+	<field name='name'>Project Actions</field>
 	<field name='res_model'>gtd.task</field>
 	<field name='view_mode'>tree,form</field>
-	<field name='context'>{'default_assigned': uid, 'default_state': 'today'}</field>
-	<field name='domain'>[('state','=','today'), ('assigned','=',uid)]</field>
+    <field name="domain">[('project.state','=','Active')]</field>
 </record>
 
-<menuitem id='today_menu' name='Today' parent='task_menu' sequence='20' action='today_action'/>
+<menuitem id='task_menu' name='All' parent='task_top_menu' sequence='5' action="task_action1"/>
 
-<record id='tomorrow_action' model='ir.actions.act_window'>
-	<field name='name'>GTD Tomorrow Actions</field>
+
+<record id='task_today_action' model='ir.actions.act_window'>
+	<field name='name'>Today Tasks </field>
 	<field name='res_model'>gtd.task</field>
 	<field name='view_mode'>tree,form</field>
-	<field name='context'>{'default_assigned': uid, 'default_state': 'tomorrow'}</field>
-	<field name='domain'>[('state','=','tomorrow'), ('assigned','=',uid)]</field>
+	<field name='domain'>[('state','=','Today')]</field>
 </record>
+<menuitem id='task_today_menu' name='Today' parent='task_top_menu'
+          sequence='5' action='task_today_action'/>
 
-<menuitem id='tomorrow_menu' name='Tomorrow' parent='task_menu' sequence='30' action='tomorrow_action'/>
-
-
-<record id='next_action' model='ir.actions.act_window'>
-	<field name='name'>GTD Next Actions</field>
+<record id='task_tomorrow_action' model='ir.actions.act_window'>
+	<field name='name'>Tomorrow Tasks </field>
 	<field name='res_model'>gtd.task</field>
 	<field name='view_mode'>tree,form</field>
-	<field name='context'>{'default_assigned': uid, 'default_state': 'next'}</field>
-	<field name='domain'>[('state','=','next'), ('assigned','=',uid)]</field>
+	<field name='domain'>[('state','=','Tomorrow')]</field>
 </record>
+<menuitem id='task_tomorrow_menu' name='Tomorrow' parent='task_top_menu'
+          sequence='9' action='task_tomorrow_action'/>
 
-<menuitem id='next_menu' name='Next' parent='task_menu' sequence='40' action='next_action'/>
-
-
-<record id='waiting_action' model='ir.actions.act_window'>
-	<field name='name'>GTD Waiting Actions</field>
+<record id='task_next_action' model='ir.actions.act_window'>
+	<field name='name'>Next Tasks </field>
 	<field name='res_model'>gtd.task</field>
 	<field name='view_mode'>tree,form</field>
-	<field name='context'>{'default_assigned': uid, 'default_state': 'waiting'}</field>
-	<field name='domain'>[('state','=','waiting'), ('assigned','=',uid)]</field>
+	<field name='domain'>[('state','=','Next')]</field>
 </record>
+<menuitem id='task_next_menu' name='Next' parent='task_top_menu'
+          sequence='10' action='task_next_action'/>
 
-<menuitem id='waiting_menu' name='Waiting' parent='task_menu' sequence='50' action='waiting_action'/>
-
-<record id='scheduled_action' model='ir.actions.act_window'>
-	<field name='name'>GTD Scheduled Actions</field>
+<record id='task_waiting_action' model='ir.actions.act_window'>
+	<field name='name'>Waiting Tasks </field>
 	<field name='res_model'>gtd.task</field>
 	<field name='view_mode'>tree,form</field>
-	<field name='context'>{'default_assigned': uid, 'default_state': 'scheduled'}</field>
-	<field name='domain'>[('state','=','scheduled'), ('assigned','=',uid)]</field>
+	<field name='domain'>[('state','=','Waiting')]</field>
 </record>
+<menuitem id='task_waiting_menu' name='Waiting' parent='task_top_menu'
+          sequence='15' action='task_waiting_action'/>
 
-<menuitem id='scheduled_menu' name='Scheduled' parent='task_menu' sequence='60' action='scheduled_action'/>
-
-<record id='someday_action' model='ir.actions.act_window'>
-	<field name='name'>GTD Someday Actions</field>
+<record id='task_scheduled_action' model='ir.actions.act_window'>
+	<field name='name'>Scheduled Tasks </field>
 	<field name='res_model'>gtd.task</field>
 	<field name='view_mode'>tree,form</field>
-	<field name='context'>{'default_assigned': uid, 'default_state': 'someday'}</field>
-	<field name='domain'>[('state','=','someday'), ('assigned','=',uid)]</field>
+	<field name='domain'>[('state','=','Scheduled')]</field>
 </record>
-
-<menuitem id='someday_menu' name='Someday' parent='task_menu' sequence='70' action='someday_action'/>
-
-
+<menuitem id='task_scheduled_menu' name='Scheduled' parent='task_top_menu'
+          sequence='20' action='task_scheduled_action'/>
+    
+<record id='task_someday_action' model='ir.actions.act_window'>
+	<field name='name'>Someday Tasks </field>
+	<field name='res_model'>gtd.task</field>
+	<field name='view_mode'>tree,form</field>
+	<field name='domain'>[('state','=','Someday')]</field>
+</record>
+<menuitem id='task_someday_menu' name='Someday' parent='task_top_menu'
+          sequence='15' action='task_someday_action'/>
+    
 <record id='task_tree_view' model='ir.ui.view'>
 	<field name='name'>GTD Inbox Tree</field>
 	<field name='model'>gtd.task</field>
@@ -82,7 +81,10 @@
 		<tree>
 			<field name='sequence' invisible='1'/>
 			<field name='name'/>
-			<field name='assigned'/>
+            <field name='area'/>
+            <field name="state"/>
+            <field name="project"/>
+            <field name="state_change_count"/>
 		</tree>
 	</field>
 </record>
@@ -100,25 +102,54 @@
 					<label for='name' class='oe_edit_only'/>
 					<h1><field name='name'/></h1>
 				</div>
-				<div class='oe_button_box oe_right'>
-					<button name='set_archive' string='Archive' type='object'/>
-				</div>
 				<group>
 					<group string='Task info'>
+                        <field name="state"/>
 						<field name='note'/>
+                        <field name="state_change_count" readonly="1"/>
 					</group>
 					<group string='Task settings'>
-						<field name='assigned'/>
 						<field name='project'/>
-						<field name='area' widget='many2many_tags'/>
-						<field name='context' widget='many2many_tags'/>
-						<field name='tags' widget='many2many_tags'/>
-						<field name='due'/>
+						<field name='area' invisible="1"/>
 					</group>
 				</group>
 			</sheet>
 		</form>
 	</field>
 </record>
+
+<record id="task_search" model="ir.ui.view">
+	<field name="name">gtd.task.search</field>
+	<field name="model">gtd.task</field>
+	<field name="arch" type="xml">
+		<search>
+			<field name="name"/>
+			<field name="project"/>
+            <field name="area"/>
+            <field name="state"/>
+            <field name="project_state"/>
+			<group string="Filter by">
+                <filter string="Today" domain="[('state','=','Today')]"/>
+                <filter string="Tomorrow" domain="[('state','=','Tomorrow')]"/>
+				<filter string="Next" domain="[('state','=','Next')]"/>
+				<filter string="Waiting" domain="[('state','=','Waiting')]"/>
+                <filter string="Someday" domain="[('state','=','Someday')]"/>
+                <filter string="Scheduled" domain="[('state','=','Scheduled')]"/>
+			</group>
+			<group string="Project State">
+                <filter string="Current" domain="[('project_state','=','Current')]"/>
+                <filter string="Plan" domain="[('project_state','=','Plan')]"/>
+				<filter string="Delay" domain="[('project_state','=','Delay')]"/>
+			</group>
+			<group string="Group By">
+				<filter string="State" name="by_state" domain="[]"
+						context="{'group_by': 'state'}"/>
+                <filter string="Project State" name="by_project_state" domain="[]"
+						context="{'group_by': 'project_state'}"/>
+			</group>
+		</search>
+	</field>
+</record>
+
 
 </data></openerp>
