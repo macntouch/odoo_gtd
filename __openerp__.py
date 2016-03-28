@@ -32,9 +32,8 @@
     'description': """
 GTD
 
-* Module exported by the prototype module for version 8.0.
-* If you have any questions, please contact Savoir-faire Linux \
-(support@savoirfairelinux.com)
+* Module for version 9.0.
+* If you have any questions, please contact Maxim Litnitskiy litnimaxster(_at_)gmail.com
 """,
     'depends': [
         'web',
@@ -48,6 +47,8 @@ GTD
         'views/area.xml',
         'views/project.xml',
         'views/task.xml',
+        'views/reference.xml',
+        'views/assets.xml',
         ],
     'demo': [
         ],

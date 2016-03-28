@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp><data>
+
+    <record model="ir.ui.view" id="reference_list">
+        <field name="name">gtd.reference list</field>
+        <field name="model">gtd.reference</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="project"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="reference_form">
+        <field name="name">gtd.reference form</field>
+        <field name="model">gtd.reference</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                        <group>
+                            <field name="project"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="content"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="reference_current_action">
+        <field name="name">Current References</field>
+        <field name="res_model">gtd.reference</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('project_state','=','Active')]</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="reference_all_action">
+        <field name="name">All References</field>
+        <field name="res_model">gtd.reference</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="reference_top_menu" name="Reference" parent="gtd_top_menu"
+              sequence="15"/>
+
+    <menuitem id="reference_current_menu" name="Current" parent="reference_top_menu"
+              sequence="10" action="reference_current_action" />
+
+    <menuitem id="reference_all_menu" name="All" parent="reference_top_menu"
+              sequence="20" action="reference_all_action" />
+
+
+    <record id="reference_search" model="ir.ui.view">
+        <field name="name">gtd.reference.search</field>
+        <field name="model">gtd.reference</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="project"/>
+                <group string="Filter by">
+                    <filter string="Active" domain="[('project_state','=','Active')]"/>
+                </group>
+                <group string="Group By">
+                    <filter string="Project" name="by_project" domain="[]"
+                            context="{'group_by': 'project'}"/>
+                    <filter string="State" name="by_state" domain="[]"
+                            context="{'group_by': 'project_state'}"/>
+                    <filter string="Area" name="by_area" domain="[]"
+                            context="{'group_by': 'project_area'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+
+</data></openerp>

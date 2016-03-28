@@ -20,7 +20,6 @@
 #
 ##############################################################################
 import area
-import context
-import tag
 import project
 import task
+import reference

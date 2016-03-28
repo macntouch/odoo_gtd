@@ -1,0 +1,10 @@
+<openerp><data>
+
+    <template id="gtd_custom" name="GTD Custom" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <link href="/odoo_gtd/static/src/css/custom.css" rel="stylesheet"
+                  type="text/css"/>
+        </xpath>
+    </template>
+
+</data></openerp>
