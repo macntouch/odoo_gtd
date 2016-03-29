@@ -10,8 +10,10 @@
             <tree colors="grey:state=='Onhold'" decoration-bf="state=='Current'">
                 <field name="sequence" widget="handle"/>
                 <field name='name' class="project-name"/>
-                <button name="set_active" icon="gtk-yes" type="object" states="Onhold"/>
-                <button name="set_onhold" icon="gtk-normal" type="object" states="Active"/>
+                <button name="set_active" icon="gtk-normal" type="object"
+                        states="Onhold" help="Set to Active"/>
+                <button name="set_onhold" icon="gtk-yes" type="object"
+                        states="Active" help="Set to Onhold"/>
                 <field name="state"/>
                 <field name="task_count" string="Tasks"/>
                 <field name="area"/>
@@ -90,6 +92,7 @@
                     <div class='oe_title oe_left'>
                         <label for='name' class='oe_edit_only'/>
                         <h1><field name='name'/></h1>
+                        <field name="area" required="True"/>
                     </div>
                     <group>
                         <group string='Info'>
@@ -97,67 +100,90 @@
                         </group>
                         <group string='Settings'>
                             <field name="state" required="True"/>
-                            <field name="area" required="True"/>
                             <field name="state_change_count" string="Changed"
                                    readonly="1"/>
                         </group>
                     </group>
                     <notebook>
-                        <page string="Tasks">
-                        <group>
-                            <field name="today_tasks" nolabel="1"
-                                   context="{'default_state':'Today',
-                                   'default_project': active_id}">
-                                    <tree>
-                                        <field string="Today" name="name"/>
-                                    </tree>
-                            </field>
-                        </group>
-                        <group>
-                            <field name="tomorrow_tasks" nolabel="1"
-                                   context="{'default_state':'Tomorrow',
-                                   'default_project': active_id}">
-                                    <tree>
-                                        <field string="Tomorrow" name="name"/>
-                                    </tree>
-                            </field>
-                        </group>
-                        <group>
-                            <field name="next_tasks" nolabel="1"
-                                   context="{'default_state':'Next',
-                                   'default_project': active_id}">
-                                    <tree>
-                                        <field string="Next" name="name"/>
-                                    </tree>
-                            </field>
-                        </group>
-                        <group>
-                            <field name="someday_tasks" nolabel="1"
-                                    context="{'default_state':'Someday',
-                                   'default_project': active_id}">
-                                    <tree>
-                                        <field string="Someday" name="name"/>
-                                    </tree>
-                            </field>
-                        </group>
-                        <group>
-                            <field name="waiting_tasks" nolabel="1"
-                                    context="{'default_state':'Waiting',
-                                   'default_project': active_id}">
-                                    <tree>
-                                        <field string="Waiting" name="name"/>
-                                    </tree>
-                            </field>
-                        </group>
-                        <group>
-                            <field name="scheduled_tasks" nolabel="1"
-                                    context="{'default_state':'Scheduled',
-                                   'default_project': active_id}">
-                                    <tree>
-                                        <field string="Scheduled" name="name"/>
-                                    </tree>
-                            </field>
-                        </group>
+                        <page string="Current Tasks">
+                            <group>
+                                <field name="today_tasks" nolabel="1"
+                                       context="{'default_state':'Today',
+                                       'default_project': active_id}">
+                                        <tree>
+                                            <field string="Today" name="name"/>
+                                        </tree>
+                                </field>
+                            </group>
+                            <group>
+                                <field name="tomorrow_tasks" nolabel="1"
+                                       context="{'default_state':'Tomorrow',
+                                       'default_project': active_id}">
+                                        <tree>
+                                            <field string="Tomorrow" name="name"/>
+                                        </tree>
+                                </field>
+                            </group>
+                            <group>
+                                <field name="next_tasks" nolabel="1"
+                                       context="{'default_state':'Next',
+                                       'default_project': active_id}">
+                                        <tree>
+                                            <field string="Next" name="name"/>
+                                        </tree>
+                                </field>
+                            </group>
+                        </page>
+                        <page string="Future Tasks">
+                            <group>
+                                <field name="waiting_tasks" nolabel="1"
+                                        context="{'default_state':'Waiting',
+                                       'default_project': active_id}">
+                                        <tree>
+                                            <field string="Waiting" name="name"/>
+                                        </tree>
+                                </field>
+                            </group>
+                            <group>
+                                <field name="scheduled_tasks" nolabel="1"
+                                        context="{'default_state':'Scheduled',
+                                       'default_project': active_id}">
+                                        <tree>
+                                            <field string="Scheduled" name="name"/>
+                                        </tree>
+                                </field>
+                            </group>
+
+                            <group>
+                                <field name="someday_tasks" nolabel="1"
+                                        context="{'default_state':'Someday',
+                                       'default_project': active_id}">
+                                        <tree>
+                                            <field string="Someday" name="name"/>
+                                        </tree>
+                                </field>
+                            </group>
+                        </page>
+                        <page string="Done Tasks">
+                            <group>
+                                <field name="done_tasks" nolabel="1"
+                                        context="{'default_state':'Done',
+                                       'default_project': active_id}">
+                                        <tree>
+                                            <field string="Done" name="name"/>
+                                        </tree>
+                                </field>
+                            </group>
+                            <group>
+                                <field name="cancelled_tasks" nolabel="1"
+                                        context="{'default_state':'Cancelled',
+                                       'default_project': active_id}">
+                                        <tree>
+                                            <field string="Cancelled" name="name"/>
+                                        </tree>
+                                </field>
+                            </group>
+
                         </page>
                         <page string="References">
                             <field name="references"
@@ -166,6 +192,16 @@
                                     <field name="name"/>
                                 </tree>
                             </field>
+                        </page>
+                        <page string="Other">
+                            <group>
+                                <group>
+                                    <field name="create_date" readonly="1"/>
+                                </group>
+                                <group>
+                                    <field name="write_date" readonly="1"/>
+                                </group>
+                            </group>
                         </page>
                     </notebook>
                 </sheet>

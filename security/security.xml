@@ -1,0 +1,54 @@
+<openerp><data>
+
+    <record id="area_owner_rule" model="ir.rule">
+        <field name="name">Area Owner Rule</field>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="model_id" ref="model_gtd_area"/>
+        <field name="domain_force">[('create_uid','=', user.id)]</field>
+    </record>
+
+    <record id="context_owner_rule" model="ir.rule">
+        <field name="name">Context Owner Rule</field>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="model_id" ref="model_gtd_context"/>
+        <field name="domain_force">[('create_uid','=', user.id)]</field>
+    </record>
+
+    <record id="project_owner_rule" model="ir.rule">
+        <field name="name">Project Owner Rule</field>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="model_id" ref="model_gtd_project"/>
+        <field name="domain_force">[('create_uid','=', user.id)]</field>
+    </record>
+
+
+    <record id="task_owner_rule" model="ir.rule">
+        <field name="name">Task Owner Rule</field>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="model_id" ref="model_gtd_task"/>
+        <field name="domain_force">[('create_uid','=', user.id)]</field>
+    </record>
+
+    <record id="reference_owner_rule" model="ir.rule">
+        <field name="name">Reference Owner Rule</field>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="model_id" ref="model_gtd_reference"/>
+        <field name="domain_force">[('create_uid','=', user.id)]</field>
+    </record>
+
+</data></openerp>

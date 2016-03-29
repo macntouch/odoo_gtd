@@ -43,8 +43,11 @@ GTD
         'python': [],
     },
     'data': [
+        'security/ir.model.access.csv',
+        'security/security.xml',
         'views/gtd.xml',
         'views/area.xml',
+        'views/context.xml',
         'views/project.xml',
         'views/task.xml',
         'views/reference.xml',

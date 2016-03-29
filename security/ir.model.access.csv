@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_gtd_area,access_gtd_area,model_gtd_area,,1,1,1,1
+access_gtd_context,access_gtd_context,model_gtd_context,,1,1,1,1
+access_gtd_project,access_gtd_project,model_gtd_project,,1,1,1,1
+access_gtd_task,access_gtd_task,model_gtd_task,,1,1,1,1
+access_gtd_reference,access_gtd_reference,model_gtd_reference,,1,1,1,1

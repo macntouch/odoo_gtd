@@ -2,30 +2,35 @@
 
     <menuitem id='task_top_menu' name='Tasks' parent='gtd_top_menu' sequence='10'/>
 
-    <record id='task_all_action' model='ir.actions.act_window'>
-        <field name='name'>Project Actions</field>
+    <record id='task_inbox_action' model='ir.actions.act_window'>
+        <field name='name'>Inbox Tasks</field>
         <field name='res_model'>gtd.task</field>
         <field name='view_mode'>tree,form</field>
+        <field name='domain'>[('state','=','Inbox')]</field>
+        <field name='context'>{'default_state': 'Inbox'}</field>
     </record>
+    <menuitem id='task_inbox_menu' name='Inbox' parent='gtd_top_menu'
+              sequence='1' action='task_inbox_action'/>
 
     <record id='task_current_action' model='ir.actions.act_window'>
         <field name='name'>Current Tasks</field>
         <field name='res_model'>gtd.task</field>
-        <field name='view_mode'>tree,form</field>
+        <field name='view_mode'>tree,form,kanban</field>
         <field name='domain'>[('state','in',['Next','Today','Tomorrow']),
-                              ('project_state','=','Active')]</field>
+                              '|', ('project_state','=','Active'),
+                                   ('project_state','=',None)]</field>
         <field name='context'>{'default_state': 'Next'}</field>
     </record>
     <menuitem id='task_current_menu' name='Current' parent='task_top_menu'
               sequence='2' action='task_current_action'/>
-
 
     <record id='task_today_action' model='ir.actions.act_window'>
         <field name='name'>Today Tasks</field>
         <field name='res_model'>gtd.task</field>
         <field name='view_mode'>tree,form</field>
         <field name='domain'>[('state','=','Today'),
-                              ('project_state','=','Active')]</field>
+                              '|', ('project_state','=','Active'),
+                              ('project_state','=',None)]</field>
         <field name='context'>{'default_state': 'Today'}</field>
     </record>
 
@@ -37,7 +42,8 @@
         <field name='res_model'>gtd.task</field>
         <field name='view_mode'>tree,form</field>
         <field name='domain'>[('state','=','Tomorrow'),
-                              ('project_state','=','Active')]</field>
+                            '|', ('project_state','=','Active'),
+                            ('project_state','=',None)]</field>
         <field name='context'>{'default_state': 'Tomorrow'}</field>
     </record>
     <menuitem id='task_tomorrow_menu' name='Tomorrow' parent='task_top_menu'
@@ -47,7 +53,9 @@
         <field name='name'>Next Tasks</field>
         <field name='res_model'>gtd.task</field>
         <field name='view_mode'>tree,form</field>
-        <field name='domain'>[('state','=','Next')]</field>
+        <field name='domain'>[('state','=','Next'),
+                            '|', ('project_state','=','Active'),
+                            ('project_state','=',None)]</field>
         <field name='context'>{'default_state': 'Next'}</field>
     </record>
     <menuitem id='task_next_menu' name='Next' parent='task_top_menu'
@@ -56,15 +64,13 @@
     <menuitem id='task_other_menu' name='Other' parent='task_top_menu'
               sequence='11' action='task_next_action'/>
 
-    <menuitem id='task_menu' name='All' parent='task_other_menu'
-              sequence='50' action="task_all_action"/>
-
     <record id='task_waiting_action' model='ir.actions.act_window'>
         <field name='name'>Waiting Tasks</field>
         <field name='res_model'>gtd.task</field>
         <field name='view_mode'>tree,form</field>
         <field name='domain'>[('state','=','Waiting'),
-                              ('project_state','=','Active')]</field>
+                            '|', ('project_state','=','Active'),
+                            ('project_state','=',None)]</field>
         <field name='context'>{'default_state': 'Waiting'}</field>
     </record>
     <menuitem id='task_waiting_menu' name='Waiting' parent='task_other_menu'
@@ -75,7 +81,8 @@
         <field name='res_model'>gtd.task</field>
         <field name='view_mode'>tree,form</field>
         <field name='domain'>[('state','=','Someday'),
-                            ('project_state','=','Active')]</field>
+                            '|', ('project_state','=','Active'),
+                            ('project_state','=',None)]</field>
         <field name='context'>{'default_state': 'Someday'}</field>
     </record>
     <menuitem id='task_someday_menu' name='Someday' parent='task_other_menu'
@@ -86,23 +93,45 @@
         <field name='res_model'>gtd.task</field>
         <field name='view_mode'>tree,form</field>
         <field name='domain'>[('state','=','Done'),
-                            ('project_state','=','Active')]</field>
+                            '|', ('project_state','=','Active'),
+                            ('project_state','=',None)]</field>
         <field name='context'>{'default_state': 'Done'}</field>
     </record>
     <menuitem id='task_done_menu' name='Done' parent='task_other_menu'
               sequence='25' action='task_done_action'/>
 
+    <record id='task_undone_action' model='ir.actions.act_window'>
+        <field name='name'>Undone Tasks</field>
+        <field name='res_model'>gtd.task</field>
+        <field name='view_mode'>tree,form</field>
+        <field name='domain'>[('state','in',['Next','Today','Tomorrow','Someday',
+                                            'Waiting', 'Scheduled']),
+                            '|', ('project_state','=','Active'),
+                            ('project_state','=',None)]</field>
+        <field name='context'>{'default_state': 'Next'}</field>
+    </record>
+    <menuitem id='task_undone_menu' name='Undone' parent='task_other_menu'
+              sequence='22' action='task_undone_action'/>
 
     <record id='task_scheduled_action' model='ir.actions.act_window'>
         <field name='name'>Scheduled Tasks</field>
         <field name='res_model'>gtd.task</field>
-        <field name='view_mode'>tree,form</field>
+        <field name='view_mode'>tree,form,calendar</field>
         <field name='domain'>[('state','=','Scheduled'),
-                              ('project_state','=','Active')]</field>
+                             '|', ('project_state','=','Active'),
+                            ('project_state','=',None)]</field>
         <field name='context'>{'default_state': 'Scheduled'}</field>
     </record>
     <menuitem id='task_scheduled_menu' name='Scheduled' parent='task_other_menu'
               sequence='20' action='task_scheduled_action'/>
+
+    <record id='task_all_action' model='ir.actions.act_window'>
+        <field name='name'>Project Actions</field>
+        <field name='res_model'>gtd.task</field>
+        <field name='view_mode'>tree,form</field>
+    </record>
+    <menuitem id='task_menu' name='All' parent='task_other_menu'
+              sequence='50' action="task_all_action"/>
 
     <record id='task_schedule_action' model='ir.actions.act_window'>
         <field name='name'>Schedule a Task</field>
@@ -139,6 +168,7 @@
 
                 <field name='sequence' widget='handle'/>
                 <field name='name' />
+                <field name="project"/>
                 <button name="set_done" icon="terp-camera_test" type="object"
                         help="Set Done"/>
                 <button name="set_today" icon="star-on" type="object"
@@ -153,9 +183,9 @@
                         help="Move to Someday"/>
                 <button name="%(task_schedule_action)d" icon="stock_calendar"
                         help="Move to Scheduled" type="action"/>
-                <field name='project_area'/>
                 <field name="state"/>
-                <field name="project"/>
+                <field name="context"/>
+                <field name='project_area'/>
                 <field name="state_change_count"/>
             </tree>
         </field>
@@ -167,7 +197,8 @@
         <field name='arch' type='xml'>
             <form string='Task'>
                 <header>
-                    <field name='state_mirror' widget='statusbar' clickable='True'/>
+                    <field name='state_mirror' widget='statusbar' clickable='True'
+                            statusbar_visible="Today,Tomorrow,Next,Someday,Waiting,Scheduled,Done,Cancelled"/>
                 </header>
                 <sheet string='Task'>
                     <div class='oe_title'>
@@ -180,6 +211,7 @@
                         </group>
                         <group string='Task settings'>
                             <field name="state" />
+                            <field name="context"/>
                             <field name="schedule_start_date"
                                    attrs="{'invisible': [('state','!=','Scheduled')]}"/>
                             <field name='project'/>
@@ -207,6 +239,7 @@
                 <field name="project"/>
                 <field name="project_area"/>
                 <field name="state"/>
+                <field name="context"/>
                 <field name="project_state"/>
                 <group string="Filter by">
                     <filter string="Today" domain="[('state','=','Today')]"/>
@@ -221,15 +254,65 @@
                     <filter string="Onhold Projects" domain="[('project_state','=','Onhold')]"/>
                 </group>
                 <group string="Group By">
+                    <filter string="Project" name="by_project" domain="[]"
+                            context="{'group_by': 'project'}"/>
                     <filter string="Task State" name="by_state" domain="[]"
                             context="{'group_by': 'state'}"/>
+                    <filter string="Context" name="by_context" domain="[]"
+                            context="{'group_by': 'context'}"/>
                     <filter string="Project State" name="by_project_state" domain="[]"
                             context="{'group_by': 'project_state'}"/>
                     <filter string="Area" name="by_area" domain="[]"
                             context="{'group_by': 'project_area'}"/>
+                    <filter string="Created" name="by_create_date" domain="[]"
+                                                context="{'group_by': 'create_date'}"/>
+                    <filter string="Updated" name="by_area" domain="[]"
+                                                context="{'group_by': 'write_date'}"/>
 
                 </group>
             </search>
+        </field>
+    </record>
+
+    <record id="task_calendar" model="ir.ui.view">
+        <field name="name">Task Calendar</field>
+        <field name="model">gtd.task</field>
+        <field name="arch" type="xml">
+            <calendar date_start="schedule_start_date"
+                      date_stop="schedule_start_date" mode="month"
+                      quick_add="False" event_open_popup="False">
+            </calendar>
+        </field>
+    </record>
+
+    <record id="task_kanban" model="ir.ui.view">
+        <field name="name">Task Kanban</field>
+        <field name="model">gtd.task</field>
+        <field name="type">kanban</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state" class="o_kanban_small_column">
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_resource_vignette">
+                            <div class="oe_kanban_content">
+                                <ul>
+                                    <li>
+                                        <strong><field name="name"/></strong>
+                                        <a type="edit">Edit</a>
+                                    </li>
+                                </ul>
+                                <div class="text-muted">
+                                    <ul>
+                                        <li><field name="project"/></li>
+                                        <li><field name="project_area"/></li>
+                                        <li><field name="context"/></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
         </field>
     </record>
 

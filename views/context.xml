@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp><data>
+
+    <record model="ir.ui.view" id="context_list">
+        <field name="name">gtd.context list</field>
+        <field name="model">gtd.context</field>
+        <field name="arch" type="xml">
+            <tree editable="top">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="context_form">
+        <field name="name">gtd.context form</field>
+        <field name="model">gtd.context</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group string="Info">
+                            <field name="name"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="context_action">
+        <field name="name">Context</field>
+        <field name="res_model">gtd.context</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <menuitem name="Context" parent="project_settings_menu" sequence="10"
+              action="context_action" id="context_menu"/>
+
+
+</data></openerp>

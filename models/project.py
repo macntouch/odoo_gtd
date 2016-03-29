@@ -12,10 +12,10 @@ class Project(models.Model):
     note = fields.Html()
     area = fields.Many2one('gtd.area')
     state = fields.Selection(selection=(
+        ('Done', 'Done'),
         ('Active', 'Active'),
         ('Onhold', 'Onhold'),
         ('Cancelled', 'Cancelled'),
-        ('Done', 'Done')
         ),
         index=True,
         default='Active')
@@ -41,6 +41,10 @@ class Project(models.Model):
                                   domain=[('state','=','Waiting')])
     scheduled_tasks = fields.One2many(comodel_name='gtd.task', inverse_name='project',
                                   domain=[('state','=','Scheduled')])
+    done_tasks = fields.One2many(comodel_name='gtd.task', inverse_name='project',
+                                  domain=[('state','=','Done')])
+    cancelled_tasks = fields.One2many(comodel_name='gtd.task', inverse_name='project',
+                                  domain=[('state','=','Cancelled')])
     references = fields.One2many(comodel_name='gtd.reference', inverse_name='project')
     reference_count = fields.Integer(compute='_reference_count')
 
