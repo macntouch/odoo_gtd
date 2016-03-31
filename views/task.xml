@@ -133,12 +133,35 @@
     <menuitem id='task_menu' name='All' parent='task_other_menu'
               sequence='50' action="task_all_action"/>
 
-    <record id='task_schedule_action' model='ir.actions.act_window'>
+    <record id='task_set_scheduled_action' model='ir.actions.act_window'>
         <field name='name'>Schedule a Task</field>
         <field name='res_model'>gtd.schedule_task</field>
         <field name="target">new</field>
         <field name='view_mode'>form</field>
     </record>
+
+    <record id='task_set_waiting_action' model='ir.actions.act_window'>
+        <field name='name'>Move Task to Waiting</field>
+        <field name='res_model'>gtd.waiting_task</field>
+        <field name="target">new</field>
+        <field name='view_mode'>form</field>
+    </record>
+    <record id="task_set_waiting_form" model="ir.ui.view">
+        <field name="name">Move Task to Waiting Form</field>
+        <field name="model">gtd.waiting_task</field>
+        <field name="arch" type="xml">
+            <form string="Move to Waiting">
+                <group>
+                    <field name="new_due_date"/>
+                </group>
+                <footer>
+                    <button string="Submit" name="do_waiting" type="object" class="oe_highlight"/>
+                    <button special="cancel" string="Cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
 
     <record id="task_schedule_form" model="ir.ui.view">
         <field name="name">Task Schedule Form</field>
@@ -155,7 +178,6 @@
             </form>
         </field>
     </record>
-
     <record id='task_tree_view' model='ir.ui.view'>
         <field name='name'>GTD Inbox Tree</field>
         <field name='model'>gtd.task</field>
@@ -177,11 +199,11 @@
                         help="Move to Tomorrow"/>
                 <button name="set_next" icon="gtk-connect" type="object"
                         help="Move to Next"/>
-                <button name="set_waiting" icon="terp-project" type="object"
-                        help="Set Waiting"/>
+                <button name="%(task_set_waiting_action)d" icon="terp-project"
+                        type="action" help="Set Waiting"/>
                 <button name="set_someday" icon="gtk-clear" type="object"
                         help="Move to Someday"/>
-                <button name="%(task_schedule_action)d" icon="stock_calendar"
+                <button name="%(task_set_scheduled_action)d" icon="stock_calendar"
                         help="Move to Scheduled" type="action"/>
                 <field name="state"/>
                 <field name="context"/>
@@ -197,10 +219,28 @@
         <field name='arch' type='xml'>
             <form string='Task'>
                 <header>
-                    <field name='state_mirror' widget='statusbar' clickable='True'
+                    <field name='state_mirror' widget='statusbar'
                             statusbar_visible="Today,Tomorrow,Next,Someday,Waiting,Scheduled,Done,Cancelled"/>
                 </header>
                 <sheet string='Task'>
+                    <div class="oe_button_box oe_right oe_read_only">
+                        <button name="set_done" icon="terp-camera_test" type="object"
+                                help="Set Done"/>
+                        <button name="set_today" icon="star-on" type="object"
+                                help="Move to Today"/>
+                        <button name="set_tomorrow" icon="terp-mail-forward" type="object"
+                                help="Move to Tomorrow"/>
+                        <button name="set_next" icon="gtk-connect" type="object"
+                                help="Move to Next"/>
+                        <button name="%(task_set_waiting_action)d" icon="terp-project"
+                                type="action" help="Set Waiting"/>
+                        <button name="set_someday" icon="gtk-clear" type="object"
+                                help="Move to Someday"/>
+                        <button name="%(task_set_scheduled_action)d" icon="stock_calendar"
+                                help="Move to Scheduled" type="action"/>
+                        <button name="set_cancelled" icon="gtk-cancel"
+                                help="Cancel" type="object"/>
+                    </div>
                     <div class='oe_title'>
                         <label for='name' class='oe_edit_only'/>
                         <h1><field name='name'/></h1>
@@ -210,13 +250,15 @@
                             <field name="note" widget="html" nolabel="1"/>
                         </group>
                         <group string='Task settings'>
-                            <field name="state" />
-                            <field name="context"/>
+                            <field name="state"/>
+                            <field name="due_date"
+                                   attrs="{'invisible': [('state','!=','Waiting')]}"/>
                             <field name="schedule_start_date"
                                    attrs="{'invisible': [('state','!=','Scheduled')]}"/>
+                            <field name="context"/>
                             <field name='project'/>
                             <field name='project_area' invisible="1"/>
-                            <field name="state_change_count" readonly="1"/>
+                            <field class="oe_read_only" name="state_change_count" readonly="1"/>
                         </group>
                     </group>
                 </sheet>

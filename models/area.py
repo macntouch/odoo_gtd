@@ -6,5 +6,6 @@ class Area(models.Model):
 	_order = 'name'
 
 	name = fields.Char(required=True)
+	wu_id = fields.Char()
 
 

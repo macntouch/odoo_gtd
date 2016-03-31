@@ -1,3 +1,4 @@
+import requests
 from datetime import datetime, date
 from openerp import fields, models, api
 
@@ -15,18 +16,19 @@ class Task(models.Model):
         fold = {}
         return states, fold
 
-    _group_by_full = {'state': _read_group_state_ids}
+    _group_by_full2 = {'state': _read_group_state_ids}
 
     name = fields.Char(required=True)
     sequence = fields.Integer()
     note = fields.Html()
     project = fields.Many2one('gtd.project', ondelete='cascade')
+    project_state = fields.Selection(related='project.state', store=True)
     project_area = fields.Many2one(comodel_name='gtd.area',
                                    related='project.area', store=True)
-    context = fields.Many2one(comodel_name='gtd.context', ondelete='cascade')
+    context = fields.Many2one(comodel_name='gtd.context', ondelete='restrict')
     #tags = fields.Many2many('gtd.tag')
     schedule_start_date = fields.Date()
-    #schedule_start_time
+    due_date = fields.Date()
     state = fields.Selection(selection=(
         ('Done', 'Done'),
         ('Today', 'Today'),
@@ -38,16 +40,16 @@ class Task(models.Model):
         ('Cancelled', 'Cancelled'),
         ('Inbox', 'Inbox')),
         index=True, required=True, track_visibility=True)
-    state_mirror = fields.Selection(related='state')
+    state_mirror = fields.Selection(related='state', store=True)
     state_changed = fields.Datetime(default=fields.Datetime.now)
     state_change_count = fields.Integer(default=0, string='Changed')
-    project_state = fields.Selection(related='project.state', store=True)
     #assigned = fields.Many2one('res.users', required=True)
+    wu_id = fields.Char()
 
 
     # Hack for Kanban view thanks to Ludwik
     # (http://ludwiktrammer.github.io/odoo/odoo-grouping-kanban-view-empty.html)
-    def _read_group_fill_results(self, cr, uid, domain, groupby,
+    def _read_group_fill_results2(self, cr, uid, domain, groupby,
                                  remaining_groupbys, aggregated_fields,
                                  count_field, read_group_result,
                                  read_group_order=None, context=None):
@@ -155,6 +157,28 @@ class Task(models.Model):
                 })
         return {}
 
+    @api.model
+    def move_waiting_to_today(self):
+        # Take all waiting tasks and escalate projects
+        today = fields.Date.today()
+        print today, type(today)
+        for task in self.search([('state','=','Waiting'),
+                                 ('project_state','in',['Active', 'Onhold']),
+                                 ('due_date','<=', today)]):
+            task.write({
+                'state': 'Today',
+                'state_changed': fields.Datetime.now(),
+                'state_change_count': task.state_change_count + 1
+            })
+            # Escalate the project
+            if task.project.state == 'Onhold':
+                task.project.write({'state': 'Active'})
+
+    @api.model
+    def wunderlist_sync_step1(self):
+        redirect_uri = 'http://localhost:8069/web'
+        client_id = 'litnimaxster@gmail.com'
+        wunderlist_url = 'https://www.wunderlist.com/oauth/authorize?client_id=ID&redirect_uri=%s&state=RANDOM'
 
 
 class ScheduleTask(models.TransientModel):
@@ -170,8 +194,39 @@ class ScheduleTask(models.TransientModel):
     new_start_date = fields.Date(required=True, default=_default_start_date)
 
 
-    @api.multi
+    @api.one
     def do_schedule(self):
-        self.task.write({'schedule_start_date': self.new_start_date})
+        self.task.write({
+            'schedule_start_date': self.new_start_date,
+            'state': 'Scheduled',
+            'state_changed': fields.Datetime.now(),
+            'state_change_count': self.task.state_change_count + 1,
+        })
+        return {}
+
+
+
+class WaitingTask(models.TransientModel):
+    _name = 'gtd.waiting_task'
+
+    def _default_task(self):
+        return self.env['gtd.task'].browse(self._context.get('active_id'))
+
+    def _default_due_date(self):
+        return self._default_task().due_date
+
+    task = fields.Many2one(comodel_name='gtd.task', default=_default_task)
+    new_due_date = fields.Date(required=False, default=_default_due_date)
+
+
+    @api.one
+    def do_waiting(self):
+        self.task.write({
+            'due_date': self.new_due_date,
+            'state': 'Waiting',
+            'state_changed': fields.Datetime.now(),
+            'state_change_count': self.task.state_change_count + 1,
+
+        })
         return {}
 

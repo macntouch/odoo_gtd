@@ -79,7 +79,9 @@
                     <div class='oe_button_box oe_right'>
                         <button class="oe_inline oe_stat_button" name='%(task_project_action)d'
                                 string='Tasks' type='action'
-                                context="{'default_project': active_id}" icon="fa-tasks">
+                                context="{'default_project': active_id,
+                                        'search_default_by_state': 1}"
+                                icon="fa-tasks">
                             <span><field string="Tasks" name="task_count"/></span>
                         </button>
                         <button class="oe_inline oe_stat_button" name='%(task_reference_action)d'
@@ -107,6 +109,15 @@
                     <notebook>
                         <page string="Current Tasks">
                             <group>
+                                <field name="next_tasks" nolabel="1"
+                                       context="{'default_state':'Next',
+                                       'default_project': active_id}">
+                                        <tree>
+                                            <field string="Next" name="name"/>
+                                        </tree>
+                                </field>
+                            </group>
+                            <group>
                                 <field name="today_tasks" nolabel="1"
                                        context="{'default_state':'Today',
                                        'default_project': active_id}">
@@ -121,15 +132,6 @@
                                        'default_project': active_id}">
                                         <tree>
                                             <field string="Tomorrow" name="name"/>
-                                        </tree>
-                                </field>
-                            </group>
-                            <group>
-                                <field name="next_tasks" nolabel="1"
-                                       context="{'default_state':'Next',
-                                       'default_project': active_id}">
-                                        <tree>
-                                            <field string="Next" name="name"/>
                                         </tree>
                                 </field>
                             </group>
@@ -317,5 +319,37 @@
         <field name="value"
                eval="'ir.actions.server,' + str(ref('project_multi_set_onhold_server_action'))"/>
     </record>
+    <!-- Change Area -->
+    <record id="project_change_area_view" model="ir.ui.view">
+        <field name="name">Change Area</field>
+        <field name="model">gtd.project_area</field>
+        <field name="arch" type="xml">
+            <form string="Change Area">
+                <group>
+                    <field name="new_area"/>
+                </group>
+                <footer>
+                    <button string="Submit" name="do_change_area" type="object"
+                            class="oe_highlight"/>
+                    <button special="cancel" string="Cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id='project_multi_change_area_action' model='ir.actions.act_window'>
+        <field name='name'>Change Area</field>
+        <field name='res_model'>gtd.project_area</field>
+        <field name="target">new</field>
+        <field name='view_mode'>form</field>
+    </record>
+
+    <record id="project_multi_change_area" model="ir.values">
+        <field name="name">Change Area</field>
+        <field name="model">gtd.project</field>
+        <field name="key2">client_action_multi</field>
+        <field name="value"
+               eval="'ir.actions.act_window,' + str(ref('project_multi_change_area_action'))"/>
+    </record>
+
 
 </data></openerp>

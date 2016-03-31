@@ -1,0 +1,20 @@
+<openerp><data>
+
+    <record id="wunderlist_action" model="ir.actions.act_url">
+        <field name="name">Wunderlist Action</field>
+        <field name="url">https://www.wunderlist.com/oauth/authorize?client_id=9a7230416d672151b95e&amp;redirect_uri=http://localhost:8069/wunderlist_code&amp;state=RANDOM</field>
+    </record>
+
+    <record id="wunderlist_user_button" model="ir.ui.view">
+        <field name="name">Wunderlist User Button</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form_simple_modif"/>
+        <field name="arch" type="xml">
+            <xpath expr='//footer' place="before">
+                <button type="action" name="%(wunderlist_action)d"
+                        string="Wunderlist Sync"/>
+            </xpath>
+        </field>
+    </record>
+
+</data></openerp>

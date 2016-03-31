@@ -10,7 +10,7 @@ class Project(models.Model):
     sequence = fields.Integer()
     name = fields.Char(required=True)
     note = fields.Html()
-    area = fields.Many2one('gtd.area')
+    area = fields.Many2one(comodel_name='gtd.area', ondelete='restrict')
     state = fields.Selection(selection=(
         ('Done', 'Done'),
         ('Active', 'Active'),
@@ -47,6 +47,7 @@ class Project(models.Model):
                                   domain=[('state','=','Cancelled')])
     references = fields.One2many(comodel_name='gtd.reference', inverse_name='project')
     reference_count = fields.Integer(compute='_reference_count')
+    wu_id = fields.Char()
 
     @api.one
     def set_active(self):
@@ -89,3 +90,18 @@ class Project(models.Model):
             'state': state,
             'state_change_count': self.state_change_count + 1
         })
+
+
+class ProjectArea(models.TransientModel):
+    _name = 'gtd.project_area'
+
+    new_area = fields.Many2one(comodel_name='gtd.area', required=True)
+
+    @api.one
+    def do_change_area(self):
+        print self.new_area
+        projects = self.env['gtd.project'].browse(self._context.get(
+                                                        'active_ids', []))
+        print projects
+        projects.write({'area': self.new_area.id})
+        return {}
