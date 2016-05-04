@@ -1,6 +1,14 @@
-import requests
 from datetime import datetime, date
+from dateutil.relativedelta import  relativedelta
+import requests
 from openerp import fields, models, api
+
+_intervalTypes = {
+    'day': lambda interval: relativedelta(days=interval),
+    'week': lambda interval: relativedelta(days=7*interval),
+    'month': lambda interval: relativedelta(months=interval),
+}
+
 
 
 class Task(models.Model):
@@ -18,16 +26,24 @@ class Task(models.Model):
 
     _group_by_full2 = {'state': _read_group_state_ids}
 
-    name = fields.Char(required=True)
     sequence = fields.Integer()
+    name = fields.Char(required=True)
     note = fields.Html()
     project = fields.Many2one('gtd.project', ondelete='cascade')
+    area = fields.Many2one(comodel_name='gtd.area', ondelete='restrict',
+                           compute='_get_area', store=True)
+    task_area = fields.Many2one(comodel_name='gtd.area', ondelete='restrict')
     project_state = fields.Selection(related='project.state', store=True)
     project_area = fields.Many2one(comodel_name='gtd.area',
                                    related='project.area', store=True)
     context = fields.Many2one(comodel_name='gtd.context', ondelete='restrict')
     #tags = fields.Many2many('gtd.tag')
     schedule_start_date = fields.Date()
+    repeat = fields.Boolean()
+    interval_type = fields.Selection(selection=[('day', 'Every Day'),
+                                                ('week', 'Every Week'),
+                                                ('month', 'Every Month')],
+                                     string='Interval Unit')
     due_date = fields.Date()
     state = fields.Selection(selection=(
         ('Done', 'Done'),
@@ -45,7 +61,18 @@ class Task(models.Model):
     state_change_count = fields.Integer(default=0, string='Changed')
     #assigned = fields.Many2one('res.users', required=True)
     wu_id = fields.Char()
+    focus = fields.Selection(selection=(
+        ('0', 'Non-focused'),
+        ('1', 'Focused')), default='0')
 
+    @api.one
+    @api.depends('project', 'task_area')
+    def _get_area(self):
+        if self.project:
+            # We take project's area
+            self.area = self.project.area
+        else:
+            self.area = self.task_area
 
     # Hack for Kanban view thanks to Ludwik
     # (http://ludwiktrammer.github.io/odoo/odoo-grouping-kanban-view-empty.html)
@@ -76,6 +103,11 @@ class Task(models.Model):
             cr, uid, domain, groupby, remaining_groupbys, aggregated_fields,
             count_field, read_group_result, read_group_order, context
         )
+
+    @api.model
+    def create(self, vals):
+        vals.update({'state_change_count': 1, 'state_changed': datetime.now()})
+        return super(Task, self).create(vals)
 
 
     @api.one
@@ -142,12 +174,20 @@ class Task(models.Model):
             'state_changed': datetime.now()
         })
 
+    @api.one
+    def invert_focus(self):
+        self.write({
+            'focus': '1' if self.focus == '0' else '0',
+            'state_change_count': self.state_change_count + 1,
+            'state_changed': datetime.now()
+        })
+
     @api.model
     def move_tomorrow_to_today(self):
-        for task in self.search([('state','=','Tomorrow')]):
-            if not task.state_changed:
-                # Ommit tasks without state change
-                continue
+        for task in self.search([('state','=','Tomorrow'),
+                                 ('project_state','in',['Active', 'Onhold']),
+                                 ]):
+            print task.name, task.state_changed
             state_changed = datetime.strptime(task.state_changed,
                                               '%Y-%m-%d %H:%M:%S')
             if date.today() >= state_changed.date():
@@ -155,13 +195,16 @@ class Task(models.Model):
                             'state_changed': fields.Datetime.now(),
                             'state_change_count': task.state_change_count + 1
                 })
+                # Escalate the project
+                if task.project.state == 'Onhold':
+                    task.project.write({'state': 'Active'})
+
         return {}
 
     @api.model
     def move_waiting_to_today(self):
         # Take all waiting tasks and escalate projects
         today = fields.Date.today()
-        print today, type(today)
         for task in self.search([('state','=','Waiting'),
                                  ('project_state','in',['Active', 'Onhold']),
                                  ('due_date','<=', today)]):
@@ -173,6 +216,30 @@ class Task(models.Model):
             # Escalate the project
             if task.project.state == 'Onhold':
                 task.project.write({'state': 'Active'})
+
+
+    @api.model
+    def move_scheduled_to_today(self):
+        # Take all waiting tasks and escalate projects
+        today = fields.Date.today()
+        for task in self.search([('state','=','Scheduled'),
+                                 ('project_state','in',['Active', 'Onhold']),
+                                 ('schedule_start_date','<=', today)]):
+            task.write({
+                'state': 'Today',
+                'state_changed': fields.Datetime.now(),
+                'state_change_count': task.state_change_count + 1
+            })
+            # Escalate the project
+            if task.project.state == 'Onhold':
+                task.project.write({'state': 'Active'})
+            # Check repeatable
+            if task.repeat:
+                new_task = task.copy(default={
+                    'state': 'Scheduled',
+                    'schedule_start_date': datetime.strptime(today, '%Y-%m-%d') + _intervalTypes[task.interval_type](1)
+                })
+
 
     @api.model
     def wunderlist_sync_step1(self):

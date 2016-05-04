@@ -24,6 +24,19 @@
     <menuitem id='task_current_menu' name='Current' parent='task_top_menu'
               sequence='2' action='task_current_action'/>
 
+    <record id='task_focus_action' model='ir.actions.act_window'>
+        <field name='name'>Focus Tasks</field>
+        <field name='res_model'>gtd.task</field>
+        <field name='view_mode'>tree,form,kanban</field>
+        <field name='domain'>[('state','in',['Next','Today','Tomorrow']),
+                              ('focus','=','1'),
+                              '|', ('project_state','=','Active'),
+                                   ('project_state','=',None)]</field>
+        <field name='context'>{'default_state': 'Next', 'default_focus': '1'}</field>
+    </record>
+    <menuitem id='task_focus_menu' name='Focus' parent='task_top_menu'
+              sequence='3' action='task_focus_action'/>
+
     <record id='task_today_action' model='ir.actions.act_window'>
         <field name='name'>Today Tasks</field>
         <field name='res_model'>gtd.task</field>
@@ -190,12 +203,17 @@
 
                 <field name='sequence' widget='handle'/>
                 <field name='name' />
+                <field name="focus" invisible="1"/>
+                <button name="invert_focus" icon="star-on" type="object"
+                        help="Set Focus" attrs="{'invisible': [('focus','=','0')]}"/>
+                <button name="invert_focus" icon="star-off" type="object"
+                        help="Remove Focus" attrs="{'invisible': [('focus','=','1')]}"/>
                 <field name="project"/>
                 <button name="set_done" icon="terp-camera_test" type="object"
                         help="Set Done"/>
-                <button name="set_today" icon="star-on" type="object"
+                <button name="set_today" icon="STOCK_GOTO_TOP" type="object"
                         help="Move to Today"/>
-                <button name="set_tomorrow" icon="terp-mail-forward" type="object"
+                <button name="set_tomorrow" icon="STOCK_GOTO_LAST" type="object"
                         help="Move to Tomorrow"/>
                 <button name="set_next" icon="gtk-connect" type="object"
                         help="Move to Next"/>
@@ -207,7 +225,7 @@
                         help="Move to Scheduled" type="action"/>
                 <field name="state"/>
                 <field name="context"/>
-                <field name='project_area'/>
+                <field name='area'/>
                 <field name="state_change_count"/>
             </tree>
         </field>
@@ -224,11 +242,13 @@
                 </header>
                 <sheet string='Task'>
                     <div class="oe_button_box oe_right oe_read_only">
+                        <!-- <button name="set_focus" icon="star-on" type="object"
+                                help="Set Focus"/> -->
                         <button name="set_done" icon="terp-camera_test" type="object"
                                 help="Set Done"/>
-                        <button name="set_today" icon="star-on" type="object"
+                        <button name="set_today" icon="STOCK_GOTO_TOP" type="object"
                                 help="Move to Today"/>
-                        <button name="set_tomorrow" icon="terp-mail-forward" type="object"
+                        <button name="set_tomorrow" icon="STOCK_GOTO_LAST" type="object"
                                 help="Move to Tomorrow"/>
                         <button name="set_next" icon="gtk-connect" type="object"
                                 help="Move to Next"/>
@@ -250,6 +270,7 @@
                             <field name="note" widget="html" nolabel="1"/>
                         </group>
                         <group string='Task settings'>
+                            <field name="focus" widget="priority"/>
                             <field name="state"/>
                             <field name="due_date"
                                    attrs="{'invisible': [('state','!=','Waiting')]}"/>
@@ -258,7 +279,10 @@
                             <field name="context"/>
                             <field name='project'/>
                             <field name='project_area' invisible="1"/>
+                            <field name='task_area' attrs="{'invisible': [('project_area','!=','')]}"/>-->
                             <field class="oe_read_only" name="state_change_count" readonly="1"/>
+                            <field name="repeat" attrs="{'invisible': [('state','!=','Scheduled')]}"/>
+                            <field name="interval_type" attrs="{'invisible': [('repeat','!=',True)]}"/>
                         </group>
                     </group>
                 </sheet>
@@ -278,8 +302,9 @@
         <field name="arch" type="xml">
             <search>
                 <field name="name"/>
+                <field name="note"/>
                 <field name="project"/>
-                <field name="project_area"/>
+                <field name="area"/>
                 <field name="state"/>
                 <field name="context"/>
                 <field name="project_state"/>
@@ -305,10 +330,10 @@
                     <filter string="Project State" name="by_project_state" domain="[]"
                             context="{'group_by': 'project_state'}"/>
                     <filter string="Area" name="by_area" domain="[]"
-                            context="{'group_by': 'project_area'}"/>
+                            context="{'group_by': 'area'}"/>
                     <filter string="Created" name="by_create_date" domain="[]"
                                                 context="{'group_by': 'create_date'}"/>
-                    <filter string="Updated" name="by_area" domain="[]"
+                    <filter string="Updated" name="by_write_date" domain="[]"
                                                 context="{'group_by': 'write_date'}"/>
 
                 </group>
@@ -346,7 +371,7 @@
                                 <div class="text-muted">
                                     <ul>
                                         <li><field name="project"/></li>
-                                        <li><field name="project_area"/></li>
+                                        <li><field name="area"/></li>
                                         <li><field name="context"/></li>
                                     </ul>
                                 </div>

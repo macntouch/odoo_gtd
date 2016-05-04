@@ -1,3 +1,4 @@
+from datetime import datetime
 from openerp import fields, models, api
 
 
@@ -13,20 +14,26 @@ class Project(models.Model):
     area = fields.Many2one(comodel_name='gtd.area', ondelete='restrict')
     state = fields.Selection(selection=(
         ('Done', 'Done'),
+        #('Focus', 'Focus'),
         ('Active', 'Active'),
         ('Onhold', 'Onhold'),
+        ('Scheduled', 'Scheduled'),
         ('Cancelled', 'Cancelled'),
         ),
         index=True,
         default='Active')
+    schedule_start_date = fields.Date()
     state_mirror = fields.Selection(related='state')
+    state_changed = fields.Datetime(default=fields.Datetime.now)
     state_change_count = fields.Integer(default=0, string='Changed')
     #related_projects = fields.Many2many(comodel_name='gtd.project',
     #                                    relation='gtd_related_projects',
     #                                    column1='project',
     #                                    column2='relation'
     #                                    )
-    task_count = fields.Integer(compute='_task_count')
+    status = fields.Char()
+    open_task_count = fields.Integer(compute='_open_task_count')
+    closed_task_count = fields.Integer(compute='_closed_task_count')
 
     tasks = fields.One2many(comodel_name='gtd.task', inverse_name='project')
     today_tasks = fields.One2many(comodel_name='gtd.task', inverse_name='project',
@@ -48,6 +55,19 @@ class Project(models.Model):
     references = fields.One2many(comodel_name='gtd.reference', inverse_name='project')
     reference_count = fields.Integer(compute='_reference_count')
     wu_id = fields.Char()
+    focus = fields.Selection(selection=(
+        ('0', 'Non-focused'),
+        ('1', 'Focused')), default='0')
+
+
+    @api.one
+    def invert_focus(self):
+        self.write({
+            'focus': '1' if self.focus == '0' else '0',
+            'state_change_count': self.state_change_count + 1,
+            'state_changed': datetime.now()
+        })
+
 
     @api.one
     def set_active(self):
@@ -78,8 +98,18 @@ class Project(models.Model):
         })
 
     @api.one
-    def _task_count(self):
-        self.task_count = len(self.tasks)
+    def _open_task_count(self):
+        self.open_task_count = len(self.env['gtd.task'].search([
+            ('project','=', self.id),
+            ('state','not in',['Done','Cancelled'])
+        ]))
+
+    @api.one
+    def _closed_task_count(self):
+        self.closed_task_count = len(self.env['gtd.task'].search([
+            ('project','=', self.id),
+            ('state','in',['Done','Cancelled'])
+        ]))
 
     @api.one
     def _reference_count(self):
@@ -90,6 +120,19 @@ class Project(models.Model):
             'state': state,
             'state_change_count': self.state_change_count + 1
         })
+        
+    @api.model
+    def move_scheduled_to_active(self):
+        # Take all waiting tasks and escalate projects
+        today = fields.Date.today()
+        for project in self.search([('state','=','Scheduled'),
+                                    ('schedule_start_date','<=', today)]):
+            project.write({
+                'state': 'Active',
+                # Unknows field? 'state_changed': fields.Datetime.now(),
+                'state_change_count': project.state_change_count + 1
+            })
+
 
 
 class ProjectArea(models.TransientModel):
@@ -99,9 +142,7 @@ class ProjectArea(models.TransientModel):
 
     @api.one
     def do_change_area(self):
-        print self.new_area
         projects = self.env['gtd.project'].browse(self._context.get(
                                                         'active_ids', []))
-        print projects
         projects.write({'area': self.new_area.id})
         return {}
