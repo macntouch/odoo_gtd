@@ -1,0 +1,633 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* odoo_gtd
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 9.0c\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-03-29 20:05+0000\n"
+"PO-Revision-Date: 2016-03-29 23:06+0300\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: ru\n"
+"X-Generator: Poedit 1.8.5\n"
+
+#. module: odoo_gtd
+#: selection:gtd.project,state:0
+#: model:ir.ui.menu,name:odoo_gtd.project_active_menu
+#: model:ir.ui.view,arch_db:odoo_gtd.project_search
+#: model:ir.ui.view,arch_db:odoo_gtd.reference_search
+msgid "Active"
+msgstr "Активен"
+
+#. module: odoo_gtd
+#: model:ir.ui.view,arch_db:odoo_gtd.task_search
+msgid "Active Projects"
+msgstr "Активные Проекты"
+
+#. module: odoo_gtd
+#: model:ir.ui.menu,name:odoo_gtd.project_all_menu
+#: model:ir.ui.menu,name:odoo_gtd.reference_all_menu
+#: model:ir.ui.menu,name:odoo_gtd.task_menu
+msgid "All"
+msgstr "Все"
+
+#. module: odoo_gtd
+#: model:ir.actions.act_window,name:odoo_gtd.reference_all_action
+msgid "All References"
+msgstr "Все Справочники"
+
+#. module: odoo_gtd
+#: model:ir.actions.act_window,name:odoo_gtd.area_action
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_project_area
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_reference_project_area
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_task_project_area
+#: model:ir.ui.menu,name:odoo_gtd.area_menu
+#: model:ir.ui.view,arch_db:odoo_gtd.project_search
+#: model:ir.ui.view,arch_db:odoo_gtd.reference_search
+#: model:ir.ui.view,arch_db:odoo_gtd.task_search
+msgid "Area"
+msgstr "Область"
+
+#. module: odoo_gtd
+#: model:ir.ui.view,arch_db:odoo_gtd.task_schedule_form
+msgid "Cancel"
+msgstr "Отмена"
+
+#. module: odoo_gtd
+#: selection:gtd.project,state:0 selection:gtd.task,state:0
+#: model:ir.ui.menu,name:odoo_gtd.project_cancelled_menu
+#: model:ir.ui.view,arch_db:odoo_gtd.project_form_view
+msgid "Cancelled"
+msgstr "Отменено"
+
+#. module: odoo_gtd
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_project_cancelled_tasks
+msgid "Cancelled tasks"
+msgstr "Отмененные Задачи"
+
+#. module: odoo_gtd
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_project_state_change_count
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_task_state_change_count
+#: model:ir.ui.view,arch_db:odoo_gtd.project_form_view
+#: model:ir.ui.view,arch_db:odoo_gtd.project_tree_view
+msgid "Changed"
+msgstr "Изменено"
+
+#. module: odoo_gtd
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_reference_content
+msgid "Content"
+msgstr "Содержание"
+
+#. module: odoo_gtd
+#: model:ir.actions.act_window,name:odoo_gtd.context_action
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_task_context
+#: model:ir.ui.menu,name:odoo_gtd.context_menu
+#: model:ir.ui.view,arch_db:odoo_gtd.task_search
+msgid "Context"
+msgstr "Контекст"
+
+#. module: odoo_gtd
+#: model:ir.ui.view,arch_db:odoo_gtd.task_search
+msgid "Created"
+msgstr "Создано"
+
+#. module: odoo_gtd
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_area_create_uid
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_context_create_uid
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_project_create_uid
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_reference_create_uid
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_schedule_task_create_uid
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_task_create_uid
+msgid "Created by"
+msgstr "Создано"
+
+#. module: odoo_gtd
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_area_create_date
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_context_create_date
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_project_create_date
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_reference_create_date
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_schedule_task_create_date
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_task_create_date
+msgid "Created on"
+msgstr "Создан"
+
+#. module: odoo_gtd
+#: model:ir.ui.menu,name:odoo_gtd.project_current_menu
+#: model:ir.ui.menu,name:odoo_gtd.reference_current_menu
+#: model:ir.ui.menu,name:odoo_gtd.task_current_menu
+msgid "Current"
+msgstr "Текущие"
+
+#. module: odoo_gtd
+#: model:ir.actions.act_window,name:odoo_gtd.reference_current_action
+msgid "Current References"
+msgstr "Текущие Справочники"
+
+#. module: odoo_gtd
+#: model:ir.actions.act_window,name:odoo_gtd.task_current_action
+#: model:ir.ui.view,arch_db:odoo_gtd.project_form_view
+msgid "Current Tasks"
+msgstr "Текущие Задачи"
+
+#. module: odoo_gtd
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_area_display_name
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_context_display_name
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_project_display_name
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_reference_display_name
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_schedule_task_display_name
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_task_display_name
+msgid "Display Name"
+msgstr "Отображаемое Имя"
+
+#. module: odoo_gtd
+#: selection:gtd.project,state:0 selection:gtd.task,state:0
+#: model:ir.ui.menu,name:odoo_gtd.project_done_menu
+#: model:ir.ui.menu,name:odoo_gtd.task_done_menu
+#: model:ir.ui.view,arch_db:odoo_gtd.project_form_view
+msgid "Done"
+msgstr "Выполнено"
+
+#. module: odoo_gtd
+#: model:ir.actions.act_window,name:odoo_gtd.task_done_action
+#: model:ir.ui.view,arch_db:odoo_gtd.project_form_view
+msgid "Done Tasks"
+msgstr "Выполненные Задачи"
+
+#. module: odoo_gtd
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_project_done_tasks
+msgid "Done tasks"
+msgstr "Выполненные Задачи"
+
+#. module: odoo_gtd
+#: model:ir.ui.view,arch_db:odoo_gtd.project_search
+#: model:ir.ui.view,arch_db:odoo_gtd.reference_search
+#: model:ir.ui.view,arch_db:odoo_gtd.task_search
+msgid "Filter by"
+msgstr "Фильтровать по"
+
+#. module: odoo_gtd
+#: model:ir.ui.view,arch_db:odoo_gtd.project_form_view
+msgid "Future Tasks"
+msgstr "Будущие Задачи"
+
+#. module: odoo_gtd
+#: model:ir.ui.menu,name:odoo_gtd.gtd_top_menu
+msgid "GTD"
+msgstr "GTD"
+
+#. module: odoo_gtd
+#: model:ir.ui.view,arch_db:odoo_gtd.project_search
+#: model:ir.ui.view,arch_db:odoo_gtd.reference_search
+#: model:ir.ui.view,arch_db:odoo_gtd.task_search
+msgid "Group By"
+msgstr "Группировать по"
+
+#. module: odoo_gtd
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_area_id
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_context_id
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_project_id
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_reference_id
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_schedule_task_id
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_task_id
+msgid "ID"
+msgstr "ID"
+
+#. module: odoo_gtd
+#: selection:gtd.task,state:0 model:ir.ui.menu,name:odoo_gtd.task_inbox_menu
+msgid "Inbox"
+msgstr "Входящие"
+
+#. module: odoo_gtd
+#: model:ir.actions.act_window,name:odoo_gtd.task_inbox_action
+msgid "Inbox Tasks"
+msgstr "Входящие Задачи"
+
+#. module: odoo_gtd
+#: model:ir.ui.view,arch_db:odoo_gtd.area_form
+#: model:ir.ui.view,arch_db:odoo_gtd.context_form
+#: model:ir.ui.view,arch_db:odoo_gtd.project_form_view
+msgid "Info"
+msgstr "Информация"
+
+#. module: odoo_gtd
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_area___last_update
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_context___last_update
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_project___last_update
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_reference___last_update
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_schedule_task___last_update
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_task___last_update
+msgid "Last Modified on"
+msgstr "Последний раз изменено"
+
+#. module: odoo_gtd
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_area_write_uid
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_context_write_uid
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_project_write_uid
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_reference_write_uid
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_schedule_task_write_uid
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_task_write_uid
+msgid "Last Updated by"
+msgstr "Последний раз обновлено"
+
+#. module: odoo_gtd
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_area_write_date
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_context_write_date
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_project_write_date
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_reference_write_date
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_schedule_task_write_date
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_task_write_date
+msgid "Last Updated on"
+msgstr "Последний раз обновлено"
+
+#. module: odoo_gtd
+#: model:ir.ui.view,arch_db:odoo_gtd.task_tree_view
+msgid "Move to Next"
+msgstr "Переслать в Следущие"
+
+#. module: odoo_gtd
+#: model:ir.ui.view,arch_db:odoo_gtd.task_tree_view
+msgid "Move to Scheduled"
+msgstr "Переслать в Запланированные"
+
+#. module: odoo_gtd
+#: model:ir.ui.view,arch_db:odoo_gtd.task_tree_view
+msgid "Move to Someday"
+msgstr "Переслать в Когда-нибудь"
+
+#. module: odoo_gtd
+#: model:ir.ui.view,arch_db:odoo_gtd.task_tree_view
+msgid "Move to Today"
+msgstr "Переслать в Сегодня"
+
+#. module: odoo_gtd
+#: model:ir.ui.view,arch_db:odoo_gtd.task_tree_view
+msgid "Move to Tomorrow"
+msgstr "Переслать в Завтра"
+
+#. module: odoo_gtd
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_area_name
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_context_name
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_project_name
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_reference_name
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_task_name
+msgid "Name"
+msgstr "Название"
+
+#. module: odoo_gtd
+#: model:ir.ui.view,arch_db:odoo_gtd.project_form_view
+msgid "New Reference"
+msgstr "Новый Справочник"
+
+#. module: odoo_gtd
+#: model:ir.ui.view,arch_db:odoo_gtd.project_form_view
+msgid "New Task"
+msgstr "Новая Задача"
+
+#. module: odoo_gtd
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_schedule_task_new_start_date
+msgid "New start date"
+msgstr "Новая дата начала"
+
+#. module: odoo_gtd
+#: selection:gtd.task,state:0 model:ir.ui.menu,name:odoo_gtd.task_next_menu
+#: model:ir.ui.view,arch_db:odoo_gtd.project_form_view
+#: model:ir.ui.view,arch_db:odoo_gtd.task_search
+msgid "Next"
+msgstr "Следующие"
+
+#. module: odoo_gtd
+#: model:ir.actions.act_window,name:odoo_gtd.task_next_action
+msgid "Next Tasks"
+msgstr "Следующие Задачи"
+
+#. module: odoo_gtd
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_project_next_tasks
+msgid "Next tasks"
+msgstr "Следующие задачи"
+
+#. module: odoo_gtd
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_project_note
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_task_note
+msgid "Note"
+msgstr "Примечание"
+
+#. module: odoo_gtd
+#: selection:gtd.project,state:0
+#: model:ir.ui.menu,name:odoo_gtd.project_onhold_menu
+#: model:ir.ui.view,arch_db:odoo_gtd.project_search
+msgid "Onhold"
+msgstr "Приостановленные"
+
+#. module: odoo_gtd
+#: model:ir.ui.view,arch_db:odoo_gtd.task_search
+msgid "Onhold Projects"
+msgstr "Приостановленные Проекты"
+
+#. module: odoo_gtd
+#: model:ir.ui.menu,name:odoo_gtd.project_other_menu
+#: model:ir.ui.menu,name:odoo_gtd.task_other_menu
+#: model:ir.ui.view,arch_db:odoo_gtd.project_form_view
+msgid "Other"
+msgstr "Другое"
+
+#. module: odoo_gtd
+#: model:ir.model,name:odoo_gtd.model_gtd_project
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_reference_project
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_task_project
+#: model:ir.ui.view,arch_db:odoo_gtd.project_form_view
+#: model:ir.ui.view,arch_db:odoo_gtd.reference_search
+#: model:ir.ui.view,arch_db:odoo_gtd.task_search
+msgid "Project"
+msgstr "Проект"
+
+#. module: odoo_gtd
+#: model:ir.actions.act_window,name:odoo_gtd.task_all_action
+msgid "Project Actions"
+msgstr "Действие Проекта"
+
+#. module: odoo_gtd
+#: model:ir.actions.act_window,name:odoo_gtd.task_new_action
+msgid "Project New Action"
+msgstr "Новое Действие Проекта"
+
+#. module: odoo_gtd
+#: model:ir.ui.view,arch_db:odoo_gtd.task_search
+msgid "Project State"
+msgstr "Состояние Проекта"
+
+#. module: odoo_gtd
+#: model:ir.actions.act_window,name:odoo_gtd.project_active_action
+#: model:ir.actions.act_window,name:odoo_gtd.project_all_action
+#: model:ir.actions.act_window,name:odoo_gtd.project_cancelled_action
+#: model:ir.actions.act_window,name:odoo_gtd.project_current_action
+#: model:ir.actions.act_window,name:odoo_gtd.project_done_action
+#: model:ir.actions.act_window,name:odoo_gtd.project_onhold_action
+#: model:ir.ui.menu,name:odoo_gtd.project_top_menu
+msgid "Projects"
+msgstr "Проекты"
+
+#. module: odoo_gtd
+#: model:ir.ui.menu,name:odoo_gtd.reference_top_menu
+msgid "Reference"
+msgstr "Справочник"
+
+#. module: odoo_gtd
+#: model:ir.actions.act_window,name:odoo_gtd.reference_new_action
+msgid "Reference New Action"
+msgstr "Новое Действие Справочника"
+
+#. module: odoo_gtd
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_project_reference_count
+msgid "Reference count"
+msgstr "Кол-во Справочников"
+
+#. module: odoo_gtd
+#: model:ir.actions.act_window,name:odoo_gtd.task_reference_action
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_project_references
+#: model:ir.ui.view,arch_db:odoo_gtd.project_form_view
+msgid "References"
+msgstr "Ссылки"
+
+#. module: odoo_gtd
+#: model:ir.ui.view,arch_db:odoo_gtd.task_schedule_form
+msgid "Schedule"
+msgstr "Запланированно"
+
+#. module: odoo_gtd
+#: model:ir.actions.act_window,name:odoo_gtd.task_schedule_action
+#: model:ir.ui.view,arch_db:odoo_gtd.task_schedule_form
+msgid "Schedule a Task"
+msgstr "Запланировать Задачу"
+
+#. module: odoo_gtd
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_task_schedule_start_date
+msgid "Schedule start date"
+msgstr "Запланированная дата начал"
+
+#. module: odoo_gtd
+#: selection:gtd.task,state:0
+#: model:ir.ui.menu,name:odoo_gtd.task_scheduled_menu
+#: model:ir.ui.view,arch_db:odoo_gtd.project_form_view
+#: model:ir.ui.view,arch_db:odoo_gtd.task_search
+msgid "Scheduled"
+msgstr "Запланировано"
+
+#. module: odoo_gtd
+#: model:ir.actions.act_window,name:odoo_gtd.task_scheduled_action
+msgid "Scheduled Tasks"
+msgstr "Запланированные Задачи"
+
+#. module: odoo_gtd
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_project_scheduled_tasks
+msgid "Scheduled tasks"
+msgstr "Запланированные задачи"
+
+#. module: odoo_gtd
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_project_sequence
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_task_sequence
+msgid "Sequence"
+msgstr "Нумерация"
+
+#. module: odoo_gtd
+#: model:ir.actions.server,name:odoo_gtd.project_multi_set_active_server_action
+msgid "Set Active"
+msgstr "Перевести в Активно"
+
+#. module: odoo_gtd
+#: model:ir.ui.view,arch_db:odoo_gtd.task_tree_view
+msgid "Set Done"
+msgstr "Перевести в Сделано"
+
+#. module: odoo_gtd
+#: model:ir.actions.server,name:odoo_gtd.project_multi_set_onhold_server_action
+msgid "Set Onhold"
+msgstr "Перевести в Приостановлено"
+
+#. module: odoo_gtd
+#: model:ir.ui.view,arch_db:odoo_gtd.task_tree_view
+msgid "Set Waiting"
+msgstr "Перевести в Ожидании"
+
+#. module: odoo_gtd
+#: model:ir.ui.view,arch_db:odoo_gtd.project_tree_view
+msgid "Set to Active"
+msgstr "Перевести в Активные"
+
+#. module: odoo_gtd
+#: model:ir.ui.view,arch_db:odoo_gtd.project_tree_view
+msgid "Set to Onhold"
+msgstr "Перевести в Приостановленные"
+
+#. module: odoo_gtd
+#: model:ir.ui.menu,name:odoo_gtd.project_settings_menu
+#: model:ir.ui.view,arch_db:odoo_gtd.project_form_view
+msgid "Settings"
+msgstr "Настройки"
+
+#. module: odoo_gtd
+#: selection:gtd.task,state:0 model:ir.ui.menu,name:odoo_gtd.task_someday_menu
+#: model:ir.ui.view,arch_db:odoo_gtd.project_form_view
+#: model:ir.ui.view,arch_db:odoo_gtd.task_search
+msgid "Someday"
+msgstr "Когда-нибудь"
+
+#. module: odoo_gtd
+#: model:ir.actions.act_window,name:odoo_gtd.task_someday_action
+msgid "Someday Tasks"
+msgstr "Задачи Когда-нибудь"
+
+#. module: odoo_gtd
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_project_someday_tasks
+msgid "Someday tasks"
+msgstr "Задачи когда-нибудь"
+
+#. module: odoo_gtd
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_project_state
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_project_state_mirror
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_reference_project_state
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_task_project_state
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_task_state
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_task_state_mirror
+#: model:ir.ui.view,arch_db:odoo_gtd.project_search
+#: model:ir.ui.view,arch_db:odoo_gtd.reference_search
+msgid "State"
+msgstr "Состояние"
+
+#. module: odoo_gtd
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_task_state_changed
+msgid "State changed"
+msgstr "Состояние изменено"
+
+#. module: odoo_gtd
+#: model:ir.model,name:odoo_gtd.model_gtd_task
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_schedule_task_task
+#: model:ir.ui.view,arch_db:odoo_gtd.task_form_view
+msgid "Task"
+msgstr "Задача"
+
+#. module: odoo_gtd
+#: model:ir.ui.view,arch_db:odoo_gtd.task_search
+msgid "Task State"
+msgstr "Состояние Задачи"
+
+#. module: odoo_gtd
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_project_task_count
+msgid "Task count"
+msgstr "Кол-во задач"
+
+#. module: odoo_gtd
+#: model:ir.ui.view,arch_db:odoo_gtd.task_form_view
+msgid "Task info"
+msgstr "Информация о Задаче"
+
+#. module: odoo_gtd
+#: model:ir.ui.view,arch_db:odoo_gtd.task_form_view
+msgid "Task settings"
+msgstr "Установки Задачи"
+
+#. module: odoo_gtd
+#: model:ir.actions.act_window,name:odoo_gtd.task_project_action
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_context_tasks
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_project_tasks
+#: model:ir.ui.menu,name:odoo_gtd.task_top_menu
+#: model:ir.ui.view,arch_db:odoo_gtd.project_form_view
+#: model:ir.ui.view,arch_db:odoo_gtd.project_tree_view
+msgid "Tasks"
+msgstr "Задачи"
+
+#. module: odoo_gtd
+#: selection:gtd.task,state:0 model:ir.ui.menu,name:odoo_gtd.task_today_menu
+#: model:ir.ui.view,arch_db:odoo_gtd.project_form_view
+#: model:ir.ui.view,arch_db:odoo_gtd.task_search
+msgid "Today"
+msgstr "Сегодня"
+
+#. module: odoo_gtd
+#: model:ir.actions.act_window,name:odoo_gtd.task_today_action
+msgid "Today Tasks"
+msgstr "Задачи на Сегодня"
+
+#. module: odoo_gtd
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_project_today_tasks
+msgid "Today tasks"
+msgstr "Задачи на сегодня"
+
+#. module: odoo_gtd
+#: selection:gtd.task,state:0 model:ir.ui.menu,name:odoo_gtd.task_tomorrow_menu
+#: model:ir.ui.view,arch_db:odoo_gtd.project_form_view
+#: model:ir.ui.view,arch_db:odoo_gtd.task_search
+msgid "Tomorrow"
+msgstr "Завтра"
+
+#. module: odoo_gtd
+#: model:ir.actions.act_window,name:odoo_gtd.task_tomorrow_action
+msgid "Tomorrow Tasks"
+msgstr "Задачи на Завтра"
+
+#. module: odoo_gtd
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_project_tomorrow_tasks
+msgid "Tomorrow tasks"
+msgstr "Задачи на завтра"
+
+#. module: odoo_gtd
+#: model:ir.ui.menu,name:odoo_gtd.task_undone_menu
+msgid "Undone"
+msgstr "Невыполнено"
+
+#. module: odoo_gtd
+#: model:ir.actions.act_window,name:odoo_gtd.task_undone_action
+msgid "Undone Tasks"
+msgstr "Невыполненные Задачи"
+
+#. module: odoo_gtd
+#: model:ir.ui.view,arch_db:odoo_gtd.task_search
+msgid "Updated"
+msgstr "Обновлено"
+
+#. module: odoo_gtd
+#: selection:gtd.task,state:0 model:ir.ui.menu,name:odoo_gtd.task_waiting_menu
+#: model:ir.ui.view,arch_db:odoo_gtd.project_form_view
+#: model:ir.ui.view,arch_db:odoo_gtd.task_search
+msgid "Waiting"
+msgstr "В Ожидании"
+
+#. module: odoo_gtd
+#: model:ir.actions.act_window,name:odoo_gtd.task_waiting_action
+msgid "Waiting Tasks"
+msgstr "Задачи в Ожидании"
+
+#. module: odoo_gtd
+#: model:ir.model.fields,field_description:odoo_gtd.field_gtd_project_waiting_tasks
+msgid "Waiting tasks"
+msgstr "Задачи в ожидании"
+
+#. module: odoo_gtd
+#: model:ir.model,name:odoo_gtd.model_gtd_area
+msgid "gtd.area"
+msgstr "gtd.area"
+
+#. module: odoo_gtd
+#: model:ir.model,name:odoo_gtd.model_gtd_context
+msgid "gtd.context"
+msgstr "gtd.context"
+
+#. module: odoo_gtd
+#: model:ir.model,name:odoo_gtd.model_gtd_reference
+msgid "gtd.reference"
+msgstr "gtd.reference"
+
+#. module: odoo_gtd
+#: model:ir.model,name:odoo_gtd.model_gtd_schedule_task
+msgid "gtd.schedule_task"
+msgstr "gtd.schedule_task"
+
+#. module: odoo_gtd
+#: model:ir.model,name:odoo_gtd.model_gtd_tag
+msgid "gtd.tag"
+msgstr "gtd.tag"
