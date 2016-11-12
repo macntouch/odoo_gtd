@@ -51,6 +51,7 @@ GTD
         'views/project.xml',
         'views/task.xml',
         'views/reference.xml',
+        'views/practice.xml',
         'views/assets.xml',
         'views/user.xml',
         ],

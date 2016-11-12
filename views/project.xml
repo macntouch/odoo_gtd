@@ -11,6 +11,8 @@
                 <field name="focus" invisible="1"/>
                 <field name="sequence" widget="handle"/>
                 <field name='name' class="project-name"/>
+                <field name="area"/>
+                <field name="state"/>
                 <button name="set_active" icon="gtk-normal" type="object"
                         states="Onhold" help="Set to Active"/>
                 <button name="set_onhold" icon="gtk-yes" type="object"
@@ -20,9 +22,7 @@
                 <button name="invert_focus" icon="star-off" type="object"
                         help="Remove Focus" attrs="{'invisible': [('focus','=','1')]}"/>
                 <field name="status"/>
-                <field name="state"/>
                 <field name="open_task_count" string="Tasks"/>
-                <field name="area"/>
                 <field name="state_change_count" string="Changed"/>
             </tree>
         </field>
@@ -118,8 +118,11 @@
                         <field name="area" required="True"/>
                     </div>
                     <group>
-                        <group string='Info'>
-                            <field name='note' widget="html" nolabel="1"/>
+                        <group>
+                            <div>
+                                <label for="description" class="oe_edit_only"/>
+                                <field name='description' nolabel="1"/>
+                            </div>
                         </group>
                         <group string='Settings'>
                             <field name="focus" widget="priority"/>
@@ -225,6 +228,9 @@
                                 </tree>
                             </field>
                         </page>
+                        <page string="Note">
+                            <field name="note"/>
+                        </page>
                         <page string="Other">
                             <group>
                                 <group>
@@ -257,8 +263,13 @@
                 <field name="state"/>
                 <field name="area"/>
                 <group string="Filter by">
-                    <filter string="Active" domain="[('state','=','Active')]"/>
-                    <filter string="Onhold" domain="[('state','=','Onhold')]"/>
+                    <filter name="active" string="Active" domain="[('state','=','Active')]"/>
+                    <filter name="onhold" string="Onhold" domain="[('state','=','Onhold')]"/>
+                    <filter name="current" string="Current"
+                            domain="[('state','in',['Active','Onhold'])]"/>
+                    <filter name="scheduled" string="Scheduled" domain="[('state','=','Scheduled')]"/>
+                    <filter name="done" string="Done" domain="[('state','=','Done')]"/>
+                    <filter name="cancelled" string="Cancelled" domain="[('state','=','Cancelled')]"/>
                 </group>
                 <group string="Group By">
                     <filter string="State" name="by_state" domain="[]"
@@ -284,30 +295,49 @@
         <field name='res_model'>gtd.project</field>
         <field name='view_mode'>tree,form</field>
         <field name='domain'>[('focus','=','1'),('state','not in',['Done','Cancelled'])]</field>
+        <field name="context">{'default_focus': '1'}</field>
     </record>
     <record id='project_active_action' model='ir.actions.act_window'>
         <field name='name'>Active Projects</field>
         <field name='res_model'>gtd.project</field>
         <field name='view_mode'>tree,form</field>
         <field name='domain'>[('state','=','Active')]</field>
+        <field name="context">{'default_state': 'Active'}</field>
+    </record>
+    <record id='project_inbox_action' model='ir.actions.act_window'>
+        <field name='name'>Inbox Projects</field>
+        <field name='res_model'>gtd.project</field>
+        <field name='view_mode'>tree,form</field>
+        <field name='domain'>[('state','=','Inbox')]</field>
+        <field name="context">{'default_state': 'Inbox'}</field>
     </record>
     <record id='project_onhold_action' model='ir.actions.act_window'>
         <field name='name'>Onhold Projects</field>
         <field name='res_model'>gtd.project</field>
         <field name='view_mode'>tree,form</field>
         <field name='domain'>[('state','=','Onhold')]</field>
+        <field name="context">{'default_state': 'Onhold'}</field>
+    </record>
+    <record id='project_waiting_action' model='ir.actions.act_window'>
+        <field name='name'>Waiting Projects</field>
+        <field name='res_model'>gtd.project</field>
+        <field name='view_mode'>tree,form</field>
+        <field name='domain'>[('state','=','Waiting')]</field>
+        <field name="context">{'default_state': 'Waiting'}</field>
     </record>
     <record id='project_scheduled_action' model='ir.actions.act_window'>
         <field name='name'>Scheduled Projects</field>
         <field name='res_model'>gtd.project</field>
         <field name='view_mode'>tree,form</field>
         <field name='domain'>[('state','=','Scheduled')]</field>
+        <field name="context">{'default_state': 'Scheduled'}</field>
     </record>
     <record id='project_done_action' model='ir.actions.act_window'>
         <field name='name'>Projects</field>
         <field name='res_model'>gtd.project</field>
         <field name='view_mode'>tree,form</field>
         <field name='domain'>[('state','=','Done')]</field>
+        <field name="context">{'default_state': 'Done'}</field>
     </record>
     <record id='project_cancelled_action' model='ir.actions.act_window'>
         <field name='name'>Projects</field>
@@ -315,19 +345,25 @@
         <field name='view_mode'>tree,form</field>
         <field name='domain'>[('state','=','Cancelled')]</field>
     </record>
+
     <record id='project_current_action' model='ir.actions.act_window'>
         <field name='name'>Projects</field>
         <field name='res_model'>gtd.project</field>
         <field name='view_mode'>tree,form</field>
-        <field name='domain'>[('state','in',['Active','Onhold'])]</field>
+        <field name='domain'>[('state','in',['Active','Onhold','Waiting'])]</field>
+        <field name="context">{'default_state': 'Active'}</field>
     </record>
 
+    <menuitem id='project_inbox_menu' name='Inbox' parent='project_top_menu'
+              sequence='4' action='project_inbox_action'/>
     <menuitem id='project_active_menu' name='Active' parent='project_top_menu'
               sequence='5' action='project_active_action'/>
     <menuitem id='project_focus_menu' name='Focus' parent='project_top_menu'
               sequence='7' action='project_focus_action'/>
     <menuitem id='project_onhold_menu' name='Onhold' parent='project_top_menu'
               sequence='10' action='project_onhold_action'/>
+    <menuitem id='project_waiting_menu' name='Waiting' parent='project_top_menu'
+              sequence='12' action='project_waiting_action'/>
     <menuitem id='project_current_menu' name='Current' parent='project_top_menu'
               sequence='15' action='project_current_action'/>
     <menuitem id='project_scheduled_menu' name='Scheduled' parent='project_top_menu'

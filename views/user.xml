@@ -5,6 +5,14 @@
         <field name="url">https://www.wunderlist.com/oauth/authorize?client_id=9a7230416d672151b95e&amp;redirect_uri=http://localhost:8069/wunderlist_code&amp;state=RANDOM</field>
     </record>
 
+    <record model="ir.actions.server" id="export_to_toggl_action">
+        <field name="type">ir.actions.server</field>
+        <field name="name">Export to Toggl</field>
+        <field name="state">code</field>
+        <field name="model_id" ref="model_gtd_project"/>
+        <field name="code">action = model.export_to_toggl()</field>
+    </record>
+
     <record id="wunderlist_user_button" model="ir.ui.view">
         <field name="name">Wunderlist User Button</field>
         <field name="model">res.users</field>
@@ -13,8 +21,24 @@
             <xpath expr='//footer' place="before">
                 <button type="action" name="%(wunderlist_action)d"
                         string="Wunderlist Sync"/>
+                <button type="action" name="%(export_to_toggl_action)d"
+                        string="Export to Toggl"/>
+
             </xpath>
         </field>
     </record>
+
+    <record id="toggl_api" model="ir.ui.view">
+        <field name="name">Toggl Api</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <field name="website" position="after">
+                <field name="toggl_api_token"/>
+                <field name="toggl_workspace"/>
+            </field>
+        </field>
+    </record>
+
 
 </data></openerp>

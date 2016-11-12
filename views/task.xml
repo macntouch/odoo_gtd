@@ -9,8 +9,10 @@
         <field name='domain'>[('state','=','Inbox')]</field>
         <field name='context'>{'default_state': 'Inbox'}</field>
     </record>
-    <menuitem id='task_inbox_menu' name='Inbox' parent='gtd_top_menu'
+
+        <menuitem id='task_inbox_menu' name='Inbox' parent='task_top_menu'
               sequence='1' action='task_inbox_action'/>
+
 
     <record id='task_current_action' model='ir.actions.act_window'>
         <field name='name'>Current Tasks</field>
@@ -19,7 +21,7 @@
         <field name='domain'>[('state','in',['Next','Today','Tomorrow']),
                               '|', ('project_state','=','Active'),
                                    ('project_state','=',None)]</field>
-        <field name='context'>{'default_state': 'Next'}</field>
+        <field name='context'>{'default_state': 'Next','search_default_by_area_and_project': 1}</field>
     </record>
     <menuitem id='task_current_menu' name='Current' parent='task_top_menu'
               sequence='2' action='task_current_action'/>
@@ -32,7 +34,7 @@
                               ('focus','=','1'),
                               '|', ('project_state','=','Active'),
                                    ('project_state','=',None)]</field>
-        <field name='context'>{'default_state': 'Next', 'default_focus': '1'}</field>
+        <field name='context'>{'default_state': 'Next', 'default_focus': '1','search_default_by_area_and_project': 1}</field>
     </record>
     <menuitem id='task_focus_menu' name='Focus' parent='task_top_menu'
               sequence='3' action='task_focus_action'/>
@@ -44,7 +46,7 @@
         <field name='domain'>[('state','=','Today'),
                               '|', ('project_state','=','Active'),
                               ('project_state','=',None)]</field>
-        <field name='context'>{'default_state': 'Today'}</field>
+        <field name='context'>{'default_state': 'Today','search_default_by_area_and_project': 1}</field>
     </record>
 
     <menuitem id='task_today_menu' name='Today' parent='task_top_menu'
@@ -57,7 +59,7 @@
         <field name='domain'>[('state','=','Tomorrow'),
                             '|', ('project_state','=','Active'),
                             ('project_state','=',None)]</field>
-        <field name='context'>{'default_state': 'Tomorrow'}</field>
+        <field name='context'>{'default_state': 'Tomorrow','search_default_by_area_and_project': 1}</field>
     </record>
     <menuitem id='task_tomorrow_menu' name='Tomorrow' parent='task_top_menu'
               sequence='9' action='task_tomorrow_action'/>
@@ -69,7 +71,7 @@
         <field name='domain'>[('state','=','Next'),
                             '|', ('project_state','=','Active'),
                             ('project_state','=',None)]</field>
-        <field name='context'>{'default_state': 'Next'}</field>
+        <field name='context'>{'default_state': 'Next', 'search_default_by_area_and_project': 1}</field>
     </record>
     <menuitem id='task_next_menu' name='Next' parent='task_top_menu'
               sequence='10' action='task_next_action'/>
@@ -84,7 +86,7 @@
         <field name='domain'>[('state','=','Waiting'),
                             '|', ('project_state','=','Active'),
                             ('project_state','=',None)]</field>
-        <field name='context'>{'default_state': 'Waiting'}</field>
+        <field name='context'>{'default_state': 'Waiting','search_default_by_area_and_project': 1}</field>
     </record>
     <menuitem id='task_waiting_menu' name='Waiting' parent='task_other_menu'
               sequence='15' action='task_waiting_action'/>
@@ -96,7 +98,7 @@
         <field name='domain'>[('state','=','Someday'),
                             '|', ('project_state','=','Active'),
                             ('project_state','=',None)]</field>
-        <field name='context'>{'default_state': 'Someday'}</field>
+        <field name='context'>{'default_state': 'Someday','search_default_by_area_and_project': 1}</field>
     </record>
     <menuitem id='task_someday_menu' name='Someday' parent='task_other_menu'
               sequence='15' action='task_someday_action'/>
@@ -108,7 +110,7 @@
         <field name='domain'>[('state','=','Done'),
                             '|', ('project_state','=','Active'),
                             ('project_state','=',None)]</field>
-        <field name='context'>{'default_state': 'Done'}</field>
+        <field name='context'>{'default_state': 'Done','search_default_by_area_and_project': 1}</field>
     </record>
     <menuitem id='task_done_menu' name='Done' parent='task_other_menu'
               sequence='25' action='task_done_action'/>
@@ -121,7 +123,7 @@
                                             'Waiting', 'Scheduled']),
                             '|', ('project_state','=','Active'),
                             ('project_state','=',None)]</field>
-        <field name='context'>{'default_state': 'Next'}</field>
+        <field name='context'>{'default_state': 'Next','search_default_by_area_and_project': 1}</field>
     </record>
     <menuitem id='task_undone_menu' name='Undone' parent='task_other_menu'
               sequence='22' action='task_undone_action'/>
@@ -133,7 +135,7 @@
         <field name='domain'>[('state','=','Scheduled'),
                              '|', ('project_state','=','Active'),
                             ('project_state','=',None)]</field>
-        <field name='context'>{'default_state': 'Scheduled'}</field>
+        <field name='context'>{'default_state': 'Scheduled','search_default_by_area_and_project': 1}</field>
     </record>
     <menuitem id='task_scheduled_menu' name='Scheduled' parent='task_other_menu'
               sequence='20' action='task_scheduled_action'/>
@@ -209,6 +211,8 @@
                 <button name="invert_focus" icon="star-off" type="object"
                         help="Remove Focus" attrs="{'invisible': [('focus','=','1')]}"/>
                 <field name="project"/>
+                <button name="open_project_form" type="object" icon="fa-briefcase"
+                        help="Open task's project form."/>
                 <button name="set_done" icon="terp-camera_test" type="object"
                         help="Set Done"/>
                 <button name="set_today" icon="STOCK_GOTO_TOP" type="object"
@@ -279,19 +283,13 @@
                             <field name="context"/>
                             <field name='project'/>
                             <field name='project_area' invisible="1"/>
-                            <field name='task_area' attrs="{'invisible': [('project_area','!=','')]}"/>-->
+                            <field name='task_area' attrs="{'invisible': [('project','!=',False)]}"/>
                             <field class="oe_read_only" name="state_change_count" readonly="1"/>
                             <field name="repeat" attrs="{'invisible': [('state','!=','Scheduled')]}"/>
                             <field name="interval_type" attrs="{'invisible': [('repeat','!=',True)]}"/>
                         </group>
                     </group>
                 </sheet>
-                <!--
-                <div class="oe_chatter">
-                    <field name="message_follower_ids" widget="mail_followers"/>
-                    <field name="message_ids" widget="mail_thread"/>
-                </div>
-                -->
             </form>
         </field>
     </record>
@@ -321,16 +319,19 @@
                     <filter string="Onhold Projects" domain="[('project_state','=','Onhold')]"/>
                 </group>
                 <group string="Group By">
+                    <filter string="Area" name="by_area" domain="[]"
+                            context="{'group_by': 'area'}"/>
                     <filter string="Project" name="by_project" domain="[]"
                             context="{'group_by': 'project'}"/>
+                    <filter string="Area &amp; Project"
+                            domain="[]" name="by_area_and_project"
+                            context="{'group_by': ['area','project']}"/>
                     <filter string="Task State" name="by_state" domain="[]"
                             context="{'group_by': 'state'}"/>
                     <filter string="Context" name="by_context" domain="[]"
                             context="{'group_by': 'context'}"/>
                     <filter string="Project State" name="by_project_state" domain="[]"
                             context="{'group_by': 'project_state'}"/>
-                    <filter string="Area" name="by_area" domain="[]"
-                            context="{'group_by': 'area'}"/>
                     <filter string="Created" name="by_create_date" domain="[]"
                                                 context="{'group_by': 'create_date'}"/>
                     <filter string="Updated" name="by_write_date" domain="[]"

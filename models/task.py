@@ -65,6 +65,7 @@ class Task(models.Model):
         ('0', 'Non-focused'),
         ('1', 'Focused')), default='0')
 
+
     @api.one
     @api.depends('project', 'task_area')
     def _get_area(self):
@@ -239,6 +240,22 @@ class Task(models.Model):
                     'state': 'Scheduled',
                     'schedule_start_date': datetime.strptime(today, '%Y-%m-%d') + _intervalTypes[task.interval_type](1)
                 })
+
+
+    @api.multi # Critical for returning a view!
+    def open_project_form(self):
+        #view_id = self.env.ref('odoo_gtd.project_form_view').id
+        res = {
+            #'views': [(view_id, 'form')],
+            'type': 'ir.actions.act_window',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'gtd.project',
+            'res_id': self.project[0].id,
+            'target': 'current',
+            'context': self._context.copy(),
+        }
+        return res
 
 
     @api.model

@@ -24,4 +24,5 @@ import context
 import project
 import task
 import reference
+import practice
 import user

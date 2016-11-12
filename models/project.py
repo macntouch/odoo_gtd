@@ -10,13 +10,15 @@ class Project(models.Model):
 
     sequence = fields.Integer()
     name = fields.Char(required=True)
+    description = fields.Text()
     note = fields.Html()
     area = fields.Many2one(comodel_name='gtd.area', ondelete='restrict')
     state = fields.Selection(selection=(
+        ('Inbox', 'Inbox'),
         ('Done', 'Done'),
-        #('Focus', 'Focus'),
         ('Active', 'Active'),
         ('Onhold', 'Onhold'),
+        ('Waiting', 'Waiting'),
         ('Scheduled', 'Scheduled'),
         ('Cancelled', 'Cancelled'),
         ),
@@ -132,6 +134,83 @@ class Project(models.Model):
                 # Unknows field? 'state_changed': fields.Datetime.now(),
                 'state_change_count': project.state_change_count + 1
             })
+
+
+    @api.model
+    def export_to_toggl(self):
+        import json
+        import sys
+        import getpass
+        import openerplib
+        import requests
+        from requests.auth import HTTPBasicAuth
+        from datetime import datetime
+        from datetime import timedelta
+        from dateutil import tz
+        import dateutil.parser
+        import argparse
+
+        ODOO_TIMEZONE = 'Europe/Chisinau'  # Timezone
+        TOGGL_API_TOKEN = self.env.user.partner_id.toggl_api_token
+        TOGGL_API_URL = 'https://www.toggl.com/api/v8/'
+        TOGGL_REPORTS_URL = 'https://toggl.com/reports/api/v2/'
+        TOGGL_WORKSPACE = self.env.user.partner_id.toggl_workspace
+
+        # Toggl authentication via HTTP Basic Auth
+        url = TOGGL_API_URL + 'me'
+        response = requests.get(url, auth=HTTPBasicAuth(TOGGL_API_TOKEN, 'api_token'))
+        if response.status_code != 200:
+            sys.exit('Login failed. Check your API key.')
+        response = response.json()
+        #print json.dumps(response, sort_keys=True, indent=4, separators=(',', ': '))
+
+        # Workspace id
+        try:
+            wid = [item['id'] for item in response['data']['workspaces']
+                   if item['admin'] == True and item['name'] == TOGGL_WORKSPACE][0]
+            print 'Workspace ID: %s' % wid
+        except IndexError:
+            sys.exit('Workspace not found!')
+
+        # Get projects from Toggl
+        url = TOGGL_API_URL + 'workspaces/' + str(wid) + '/projects'
+        response = requests.get(url, auth=HTTPBasicAuth(TOGGL_API_TOKEN, 'api_token'))
+
+        if response.status_code != 200:
+            sys.exit('Request failed!')
+        toggl_projects = []
+        try:
+            response = response.json()
+            #print json.dumps(response, sort_keys=True, indent=4, separators=(',', ': '))
+            toggl_projects += [item['name'] for item in response]
+        except:
+            raise
+
+        # Send projects
+
+        for project in self.env['gtd.project'].search([('state', '=', 'Active')]):
+            if project.name in toggl_projects:
+                print "Omitting project %s" % project.name
+                continue
+            else:
+                print "Creating project %s" % project.name
+            url = TOGGL_API_URL + 'projects'
+            data = {'project': {
+                'name': project.name,
+                'wid': wid,
+                'color': '13'
+            }}
+            response = requests.post(
+                url, data=json.dumps(data),
+                auth=HTTPBasicAuth(TOGGL_API_TOKEN, 'api_token'))
+            if response.status_code != 200:
+                sys.exit('Request failed!')
+
+
+
+
+
+
 
 
 

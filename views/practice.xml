@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp><data>
+
+    <record model="ir.actions.act_window" id="practice_action">
+        <field name="name">Practice</field>
+        <field name="res_model">gtd.practice</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'search_default_active': '1'}</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="practice_daily_action">
+        <field name="name">Daily</field>
+        <field name="res_model">gtd.practice_day</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id='practice_top_menu' name='Practice' parent='gtd_top_menu' sequence='8'/>
+
+    <menuitem name="Practices" parent="practice_top_menu" sequence="10"
+              action="practice_action" id="practice_menu"/>
+
+    <menuitem name="Daily" parent="practice_top_menu" sequence="20"
+              action="practice_daily_action" id="practice_daily_menu"/>
+
+
+    <record model="ir.ui.view" id="practice_list">
+        <field name="name">gtd.practice list</field>
+        <field name="model">gtd.practice</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="state"/>
+                <field name="practice_type"/>
+                <field name="week_days"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="practice_form">
+        <field name="name">gtd.practice form</field>
+        <field name="model">gtd.practice</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="description"/>
+                            <field name="state"/>
+                            <field name="practice_type"/>
+                            <field name="day_count"
+                                   attrs="{'invisible':[('practice_type','!=','counter')]}"/>
+                            <field name="day_minutes"
+                                   attrs="{'invisible':[('practice_type','!=','timer')]}"/>
+                        </group>
+                        <group>
+                            <field name="mon"/>
+                            <field name="tue"/>
+                            <field name="wed"/>
+                            <field name="thu"/>
+                            <field name="fri"/>
+                            <field name="sat"/>
+                            <field name="sun"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="note"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="practice_daily_list">
+        <field name="name">gtd.practice_daily list</field>
+        <field name="model">gtd.practice_day</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="practice_daily_form">
+        <field name="name">gtd.practice_daily form</field>
+        <field name="model">gtd.practice_day</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="date"/>
+                        <field name="practices">
+                                <tree>
+                                    <field name="practice"/>
+                                    <field name="practice_type"/>
+                                    <field name="count"
+                                           attrs="{'invisible':[('practice_type','!=','counter')]}"/>
+                                    <field name="minutes"
+                                           attrs="{'invisible':[('practice_type','!=','timer')]}"/>
+                                    <field name="done"
+                                           attrs="{'invisible':[('practice_type','!=','status')]}"/>
+                                </tree>
+                        </field>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="practice_search_view" model="ir.ui.view">
+        <field name="name">Practive Search View</field>
+        <field name="model">gtd.practice</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <group string="Filter by">
+                    <filter name="active" string="Active" domain="[('state','=','active')]"/>
+                    <filter name="onhold" string="Onhold" domain="[('state','=','onhold')]"/>
+                    <filter name="done" string="Done" domain="[('state','=','done')]"/>
+                    <filter name="cancelled" string="Cancelled" domain="[('state','=','cancelled')]"/>
+                    <filter name="draft" string="Draft" domain="[('state','=','draft')]"/>
+                </group>
+                <group string="Group by">
+                    <filter name="by_state" string="State" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+
+</data></openerp>

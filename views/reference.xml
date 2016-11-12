@@ -8,6 +8,7 @@
             <tree>
                 <field name="name"/>
                 <field name="project"/>
+                <field name="area"/>
             </tree>
         </field>
     </record>
@@ -24,6 +25,7 @@
                         </group>
                         <group>
                             <field name="project"/>
+                            <field name="area"/>
                         </group>
                     </group>
                     <group>
@@ -39,12 +41,31 @@
         <field name="res_model">gtd.reference</field>
         <field name="view_mode">tree,form</field>
         <field name="domain">[('project_state','=','Active')]</field>
+        <field name="context">{'search_default_by_area': '1'}</field>
     </record>
+
+    <record model="ir.actions.act_window" id="reference_archive_action">
+        <field name="name">Archive References</field>
+        <field name="res_model">gtd.reference</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('project_state','in',['Done', 'Cancelled'])]</field>
+        <field name="context">{'search_default_by_project': '1','search_default_by_area': '1'}</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="reference_without_project_action">
+        <field name="name">Without Project</field>
+        <field name="res_model">gtd.reference</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('project','=', None)]</field>
+        <field name="context">{'search_default_by_area': '1'}</field>
+    </record>
+
 
     <record model="ir.actions.act_window" id="reference_all_action">
         <field name="name">All References</field>
         <field name="res_model">gtd.reference</field>
         <field name="view_mode">tree,form</field>
+        <field name="context">{'search_default_by_area': '1'}</field>
     </record>
 
     <menuitem id="reference_top_menu" name="Reference" parent="gtd_top_menu"
@@ -52,6 +73,13 @@
 
     <menuitem id="reference_current_menu" name="Current" parent="reference_top_menu"
               sequence="10" action="reference_current_action" />
+
+    <menuitem id="reference_archive_menu" name="Archive" parent="reference_top_menu"
+              sequence="10" action="reference_archive_action" />
+
+    <menuitem id="reference_without_project_menu" name="Without Project"
+              parent="reference_top_menu"
+              sequence="15" action="reference_without_project_action" />
 
     <menuitem id="reference_all_menu" name="All" parent="reference_top_menu"
               sequence="20" action="reference_all_action" />
@@ -64,15 +92,21 @@
             <search>
                 <field name="name"/>
                 <field name="project"/>
+                <field name="area"/>
                 <group string="Filter by">
-                    <filter string="Active" domain="[('project_state','=','Active')]"/>
+                    <filter name='active' string="Active"
+                            domain="[('project_state','=','Active')]"/>
+                    <filter name='without_project' string="Without Project"
+                            domain="[('project','=', None)]"/>
                 </group>
                 <group string="Group By">
+                    <filter string="Area" name="by_area" domain="[]"
+                            context="{'group_by': 'area'}"/>
                     <filter string="Project" name="by_project" domain="[]"
                             context="{'group_by': 'project'}"/>
                     <filter string="State" name="by_state" domain="[]"
                             context="{'group_by': 'project_state'}"/>
-                    <filter string="Area" name="by_area" domain="[]"
+                    <filter string="Project Area" name="by_project_area" domain="[]"
                             context="{'group_by': 'project_area'}"/>
                 </group>
             </search>
